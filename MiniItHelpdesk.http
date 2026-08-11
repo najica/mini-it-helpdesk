@@ -1,0 +1,6 @@
+@MiniItHelpdesk_HostAddress = http://localhost:5197
+
+GET {{MiniItHelpdesk_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
