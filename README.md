@@ -68,7 +68,7 @@ cd ~/Projects
 Zatim klonirajte repository:
 
 ```bash
-git clone https://github.com/USERNAME/MiniItHelpdesk.git
+git clone https://github.com/najica/MiniItHelpdesk.git
 ```
 
 Uđite u projekat:
