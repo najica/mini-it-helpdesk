@@ -10,6 +10,8 @@ namespace MiniItHelpdesk.Data
         {
         }
 
+        public DbSet<Ticket> Tickets { get; set; }
+
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,6 +23,14 @@ namespace MiniItHelpdesk.Data
             modelBuilder.Entity<User>().Property(u => u.Role)
                 .HasConversion<string>()
                 .HasColumnType("TEXT");
+            modelBuilder.Entity<Ticket>().HasKey(t => t.Id);
+            modelBuilder.Entity<Ticket>().Property(t => t.Status)
+                .HasConversion<string>()
+                .HasColumnType("TEXT");
+            modelBuilder.Entity<Ticket>().Property(t => t.Priority)
+                .HasConversion<string>()
+                .HasColumnType("TEXT");
+
         }
     }
 }
