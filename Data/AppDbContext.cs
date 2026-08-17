@@ -30,6 +30,16 @@ namespace MiniItHelpdesk.Data
             modelBuilder.Entity<Ticket>().Property(t => t.Priority)
                 .HasConversion<string>()
                 .HasColumnType("TEXT");
+            modelBuilder.Entity<Ticket>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(t => t.CreatedByUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Ticket>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(t => t.AssignedToUserId)
+                .OnDelete(DeleteBehavior.SetNull);
 
         }
     }

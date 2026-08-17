@@ -30,6 +30,7 @@
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        //public User CreatedBy { get; set; } = null!;
+        public int CreatedByUserId { get; set; }
+        public int? AssignedToUserId { get; set; }
     }
 }
