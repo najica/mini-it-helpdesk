@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MiniItHelpdesk.Models;
 
 namespace MiniItHelpdesk.Data
 {
@@ -9,8 +8,5 @@ namespace MiniItHelpdesk.Data
         : base(options)
         {
         }
-
-        public DbSet<Ticket> Tickets { get; set; } 
-
     }
 }
