@@ -10,7 +10,7 @@ using MiniItHelpdesk.Data;
 namespace MiniItHelpdesk.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260817083309_AddUserDbSet")]
+    [Migration("20260817084318_AddUserDbSet")]
     partial class AddUserDbSet
     {
         /// <inheritdoc />
@@ -30,6 +30,10 @@ namespace MiniItHelpdesk.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

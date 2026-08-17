@@ -18,6 +18,9 @@ namespace MiniItHelpdesk.Data
             modelBuilder.Entity<User>().HasKey(u => u.Id);
             modelBuilder.Entity<User>().Property(u => u.Name);
             modelBuilder.Entity<User>().Property(u => u.Email);
+            modelBuilder.Entity<User>().Property(u => u.Role)
+                .HasConversion<string>()
+                .HasColumnType("TEXT");
         }
     }
 }
