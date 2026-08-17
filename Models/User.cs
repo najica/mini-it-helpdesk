@@ -2,14 +2,14 @@
 {
     public class User
     {
-        public int Id;
-        public string Name;
-        public string Email;
+        public int Id  { get; set; }  
+        public string Name { get; set; }
+        public string Email { get; set; }
         public enum UserRole
         {
             Employee, ITAgent, Admin, 
         }
 
-        public UserRole Role;
+        public UserRole Role { get; set; } = UserRole.Employee;
     }
 }
