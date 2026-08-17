@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using MiniItHelpdesk.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MiniItHelpdesk
 {
@@ -20,12 +21,17 @@ namespace MiniItHelpdesk
                 options.UseSqlite(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
