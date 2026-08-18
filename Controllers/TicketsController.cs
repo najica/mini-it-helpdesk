@@ -28,6 +28,8 @@ namespace MiniItHelpdesk.Controllers
                 return NotFound();
 
             return Ok(ticket);
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, [FromBody] UpdateTicketDto dto)
         {
