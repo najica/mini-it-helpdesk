@@ -13,6 +13,23 @@ namespace MiniItHelpdesk.Controllers
             _ticketService = ticketService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<TicketDto>>> GetAll()
+        {
+            var tickets = await _ticketService.GetAllAsync();
+            return Ok(tickets);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TicketDto>> GetById(int id)
+        {
+            var ticket = await _ticketService.GetByIdAsync(id);
+            if (ticket is null)
+                return NotFound();
+
+            return Ok(ticket);
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, [FromBody] UpdateTicketDto dto)
         {

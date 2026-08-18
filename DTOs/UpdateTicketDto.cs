@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MiniItHelpdesk.Enums;
 
 public class UpdateTicketDto
 {
