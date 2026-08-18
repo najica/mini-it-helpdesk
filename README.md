@@ -376,3 +376,45 @@ Glavni zadatak je razvoj **Mini IT Help Desk** sistema.
 Sistem treba da omogući zaposlenima da prijave IT problem, a IT podršci da pregleda i obrađuje prijavljene probleme.
 
 Detaljni zahtevi i taskovi biće definisani tokom prakse.
+
+---
+
+# 13. Sprint 1
+
+### API endpoint-i
+
+- GET /api/Tickets <br>
+Vraća listu svih prijavljenih problema (tickets).
+- GET /api/Tickets/{id} <br>
+Vraća detalje o jednom problemu po ID-u.
+- POST /api/Tickets <br>
+Kreira novi problem.
+- PUT /api/Tickets/{id} <br>
+Ažurira postojeći problem.
+- DELETE /api/Tickets/{id} <br>
+Briše problem.
+- GET /api/Users <br>
+Vraća listu svih korisnika.
+
+### Modeli
+
+- Ticket
+  - Id (int)
+  - Title (string): Naslov problema
+  - Description (string): Detaljan opis problema
+  - Status (enum: Open, InProgress, Closed): Status problema
+  - Priority (enum: Low, Medium, High): Prioritet problema
+  - Category (enum: Hardware, Software, Network, Other): Kategorija problema
+  - CreatedAt (DateTime): Datum i vreme kada je problem prijavljen
+  - UpdatedAt (DateTime): Datum i vreme kada je problem poslednji put ažuriran
+  - CreatedByUserId (int): ID korisnika koji je prijavio problem
+  - AssignedToUserId (int): ID korisnika kome je problem dodeljen (nullable)
+- User
+  - Id (int)
+  - Name (string): Ime korisnika
+  - Email (string): Email korisnika
+  - Role (enum: Employee, ITSupport): Uloga korisnika
+
+### Napomene
+Autentifikacija nije implementirana u Sprint 1.
+CreatedByUserId se prosleđuje ručno prilikom kreiranja problema.
