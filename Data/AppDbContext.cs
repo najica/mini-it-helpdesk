@@ -44,6 +44,11 @@ namespace MiniItHelpdesk.Data
                 .HasForeignKey(t => t.AssignedToUserId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            // Seed test users with fixed IDs for other students to test Ticket endpoints
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Name = "Employee", Email = "employee@test.com", Role = User.UserRole.Employee },
+                new User { Id = 2, Name = "Direct Manager", Email = "direct.manager@test.com", Role = User.UserRole.ITAgent }
+            );
         }
     }
 }
