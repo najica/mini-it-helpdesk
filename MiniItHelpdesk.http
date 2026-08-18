@@ -5,6 +5,12 @@ Accept: application/json
 
 ###
 
+### GET - All Users (should return 200 OK with list of users)
+GET {{MiniItHelpdesk_HostAddress}}/api/users
+Accept: application/json
+
+###
+
 ### DELETE - Ticket with existing ID (should return 204 No Content)
 ### Note: Update the ID based on a ticket that exists in your database
 DELETE {{MiniItHelpdesk_HostAddress}}/api/tickets/1
