@@ -15,6 +15,8 @@ namespace MiniItHelpdesk.Data
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -44,6 +46,21 @@ namespace MiniItHelpdesk.Data
                 .WithMany()
                 .HasForeignKey(t => t.AssignedToUserId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            // Comment relationships
+            // Comment → Ticket: Cascade (deleting ticket deletes its comments)
+            modelBuilder.Entity<Comment>()
+                .HasOne<Ticket>()
+                .WithMany()
+                .HasForeignKey(c => c.TicketId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Comment → User: Restrict (cannot delete user who has comments)
+            modelBuilder.Entity<Comment>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Seed test users with fixed IDs for other students to test Ticket endpoints
             modelBuilder.Entity<User>().HasData(
