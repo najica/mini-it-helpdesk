@@ -58,6 +58,54 @@ namespace MiniItHelpdesk.Migrations
                     b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Tickets");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 10, 9, 30, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 1,
+                            Description = "The printer on the second floor is unresponsive, likely a driver issue.",
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Printer not working"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AssignedToUserId = 2,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 11, 11, 15, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 1,
+                            Description = "Login returns 'Invalid credentials' error even though the password is correct.",
+                            Priority = "High",
+                            Status = "InProgress",
+                            Title = "Cannot log into the system"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AssignedToUserId = 2,
+                            Category = "Network",
+                            CreatedAt = new DateTime(2025, 1, 8, 8, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 2,
+                            Description = "Internet has been extremely slow since this morning, affecting the whole team.",
+                            Priority = "Low",
+                            Status = "Resolved",
+                            Title = "Slow internet connection"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AssignedToUserId = 2,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 5, 14, 45, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 1,
+                            Description = "Adobe Photoshop license needed for a new employee.",
+                            Status = "Closed",
+                            Title = "New software license needed"
+                        });
                 });
 
             modelBuilder.Entity("MiniItHelpdesk.Models.User", b =>
