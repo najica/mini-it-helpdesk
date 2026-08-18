@@ -1,11 +1,10 @@
-﻿using MiniItHelpdesk.Data;
+using MiniItHelpdesk.Data;
 using MiniItHelpdesk.Models;
 using SQLitePCL;
 using System;
 using System.Net.Sockets;
 
 public class TicketService : ITicketService
-
 {
     private readonly AppDbContext _context;
 
@@ -18,6 +17,7 @@ public class TicketService : ITicketService
     {
         throw new NotImplementedException();
     }
+
     public Task<TicketDto?> GetByIdAsync(int id)
     {
         throw new NotImplementedException();
@@ -51,14 +51,21 @@ public class TicketService : ITicketService
             Status = Ticket.Status
         };
     }
+
     public Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var ticket = await _context.Tickets.FindAsync(id);
+        if (ticket is null)
+            return false;
+
+        _context.Tickets.Remove(ticket);
+        await _context.SaveChangesAsync();
+        return true;
     }
 }
 
