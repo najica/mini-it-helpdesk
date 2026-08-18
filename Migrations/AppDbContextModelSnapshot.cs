@@ -77,6 +77,22 @@ namespace MiniItHelpdesk.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "employee@test.com",
+                            Name = "Employee",
+                            Role = "Employee"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "direct.manager@test.com",
+                            Name = "Direct Manager",
+                            Role = "ITAgent"
+                        });
                 });
 
             modelBuilder.Entity("MiniItHelpdesk.Models.Ticket", b =>
