@@ -2,6 +2,8 @@
 using MiniItHelpdesk.Data;
 using MiniItHelpdesk.Models;
 using System;
+using SQLitePCL;
+using System.Net.Sockets;
 
 public class TicketService : ITicketService
 {
@@ -23,15 +25,61 @@ public class TicketService : ITicketService
         var ticket = await _context.Tickets.FindAsync(id);
         return ticket is null ? null : MapToDto(ticket);
     }
-
-    public Task CreateAsync(CreateTicketDto dto)
+    public async Task<TicketDto?> CreateAsync(CreateTicketDto dto)
     {
-        throw new NotImplementedException();
+        var Ticket = new Ticket
+        {
+            Title = dto.Title,
+            Description = dto.Description,
+            Priority = dto.Priority,
+            Category = dto.TicketCategory,
+            CreatedByUserId = dto.CreatedByUserId,
+            AssignedToUserId = null,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Tickets.Add(Ticket);
+        await _context.SaveChangesAsync();
+
+        return new TicketDto
+        {
+            Id = Ticket.Id,
+            Title = Ticket.Title,
+            Description = Ticket.Description,
+            Priority = Ticket.Priority,
+            Category = Ticket.Category,
+            CreatedByUserId = Ticket.CreatedByUserId,
+            AssignedToUserId = Ticket.AssignedToUserId,
+            CreatedAt = Ticket.CreatedAt,
+            Status = Ticket.Status
+        };
     }
 
-    public Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
+    public async Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
     {
-        throw new NotImplementedException();
+        var ticket = await _context.Tickets.FindAsync(id);
+        if (ticket is null)
+            return null;
+
+        ticket.Title = dto.Title;
+        ticket.Description = dto.Description;
+        ticket.Priority = dto.Priority;
+        ticket.Category = dto.Category;
+
+        await _context.SaveChangesAsync();
+
+        return new TicketDto
+        {
+            Id = ticket.Id,
+            Title = ticket.Title,
+            Description = ticket.Description,
+            Status = ticket.Status,
+            Priority = ticket.Priority,
+            Category = ticket.Category,
+            CreatedAt = ticket.CreatedAt,
+            CreatedByUserId = ticket.CreatedByUserId,
+            AssignedToUserId = ticket.AssignedToUserId
+        };
     }
 
     public async Task<bool> DeleteAsync(int id)
