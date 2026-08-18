@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MiniItHelpdesk.Enums;
 using MiniItHelpdesk.Models;
 
 namespace MiniItHelpdesk.Data
@@ -30,6 +31,9 @@ namespace MiniItHelpdesk.Data
             modelBuilder.Entity<Ticket>().Property(t => t.Priority)
                 .HasConversion<string>()
                 .HasColumnType("TEXT");
+            modelBuilder.Entity<Ticket>().Property(t => t.Category)
+                .HasConversion<string>()
+                .HasColumnType("TEXT");
             modelBuilder.Entity<Ticket>()
                 .HasOne<User>()
                 .WithMany()
@@ -41,6 +45,18 @@ namespace MiniItHelpdesk.Data
                 .HasForeignKey(t => t.AssignedToUserId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            // Seed test users with fixed IDs for other students to test Ticket endpoints
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Name = "Employee", Email = "employee@test.com", Role = User.UserRole.Employee },
+                new User { Id = 2, Name = "Direct Manager", Email = "direct.manager@test.com", Role = User.UserRole.ITAgent }
+            );
+
+            modelBuilder.Entity<Ticket>().HasData(
+                new Ticket { Id = 1, Title = "Printer not working", Description = "The printer on the second floor is unresponsive, likely a driver issue.", Status = TicketStatus.Open, Priority = TicketPriority.Medium, Category = TicketCategory.Hardware, CreatedAt = new DateTime(2025, 1, 10, 9, 30, 0, DateTimeKind.Utc), CreatedByUserId = 1, AssignedToUserId = null },
+                new Ticket { Id = 2, Title = "Cannot log into the system", Description = "Login returns 'Invalid credentials' error even though the password is correct.", Status = TicketStatus.InProgress, Priority = TicketPriority.High, Category = TicketCategory.Software, CreatedAt = new DateTime(2025, 1, 11, 11, 15, 0, DateTimeKind.Utc), CreatedByUserId = 1, AssignedToUserId = 2 },
+                new Ticket { Id = 3, Title = "Slow internet connection", Description = "Internet has been extremely slow since this morning, affecting the whole team.", Status = TicketStatus.Resolved, Priority = TicketPriority.Low, Category = TicketCategory.Network, CreatedAt = new DateTime(2025, 1, 8, 8, 0, 0, DateTimeKind.Utc), CreatedByUserId = 2, AssignedToUserId = 2 },
+                new Ticket { Id = 4, Title = "New software license needed", Description = "Adobe Photoshop license needed for a new employee.", Status = TicketStatus.Closed, Priority = null, Category = TicketCategory.Software, CreatedAt = new DateTime(2025, 1, 5, 14, 45, 0, DateTimeKind.Utc), CreatedByUserId = 1, AssignedToUserId = 2 }
+            );
         }
     }
 }

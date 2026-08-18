@@ -1,36 +1,23 @@
-﻿namespace MiniItHelpdesk.Models
+﻿namespace MiniItHelpdesk.Models;
+
+using MiniItHelpdesk.Enums;
+
+public class Ticket
 {
-    public class Ticket
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public string Title { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
 
-        public string Description { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 
-        public enum TicketStatus
-        {
-            Open,
-            InProgress,
-            Resolved,
-            Closed
-        }
+    public TicketStatus Status { get; set; } = TicketStatus.Open;
 
-        public TicketStatus Status { get; set; } = TicketStatus.Open;
+    public TicketPriority? Priority { get; set; }
 
-        public enum TicketPriority
-        {
-            Low,
-            Medium,
-            High,
-            Critical
-        }
+    public TicketCategory Category { get; set; }
 
-        public TicketPriority? Priority { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        public int CreatedByUserId { get; set; }
-        public int? AssignedToUserId { get; set; }
-    }
+    public int CreatedByUserId { get; set; }
+    public int? AssignedToUserId { get; set; }
 }

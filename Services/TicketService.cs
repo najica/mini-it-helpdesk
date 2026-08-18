@@ -1,14 +1,57 @@
-﻿using System;
+using MiniItHelpdesk.Data;
+using MiniItHelpdesk.Models;
+using SQLitePCL;
+using System;
+using System.Net.Sockets;
 
 public class TicketService : ITicketService
-
 {
+    private readonly AppDbContext _context;
+
+    public TicketService(AppDbContext context)
+    {
+        _context = context;
+    }
+
     public Task<List<TicketDto>> GetAllAsync()
-    
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<TicketDto?> GetByIdAsync(int id)
-  
-    public Task CreateAsync(CreateTicketDto dto)
-  
+    {
+        throw new NotImplementedException();
+    }
+    public async Task<TicketDto?> CreateAsync(CreateTicketDto dto)
+    {
+        var Ticket = new Ticket
+        {
+            Title = dto.Title,
+            Description = dto.Description,
+            Priority = dto.Priority,
+            Category = dto.TicketCategory,
+            CreatedByUserId = dto.CreatedByUserId,
+            AssignedToUserId = null,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Tickets.Add(Ticket);
+        await _context.SaveChangesAsync();
+
+        return new TicketDto
+        {
+            Id = Ticket.Id,
+            Title = Ticket.Title,
+            Description = Ticket.Description,
+            Priority = Ticket.Priority,
+            Category = Ticket.Category,
+            CreatedByUserId = Ticket.CreatedByUserId,
+            AssignedToUserId = Ticket.AssignedToUserId,
+            CreatedAt = Ticket.CreatedAt,
+            Status = Ticket.Status
+        };
+    }
+
     public Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
     {
         var ticket = await _context.Tickets.FindAsync(id);
@@ -36,7 +79,15 @@ public class TicketService : ITicketService
         };
     }
 
-    public Task DeleteAsync(int id)
-   
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var ticket = await _context.Tickets.FindAsync(id);
+        if (ticket is null)
+            return false;
+
+        _context.Tickets.Remove(ticket);
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }
 

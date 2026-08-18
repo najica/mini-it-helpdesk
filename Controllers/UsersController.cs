@@ -1,0 +1,22 @@
+using Microsoft.AspNetCore.Mvc;
+using MiniItHelpdesk.DTOs;
+using MiniItHelpdesk.Services;
+
+namespace MiniItHelpdesk.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
+    {
+        private readonly IUserService _userService;
+
+        public UsersController(IUserService userService) => _userService = userService;
+
+        [HttpGet]
+        public async Task<ActionResult<List<UserDto>>> GetAll()
+        {
+            var users = await _userService.GetAllAsync();
+            return Ok(users);
+        }
+    }
+}
