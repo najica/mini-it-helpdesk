@@ -1,7 +1,8 @@
+﻿using Microsoft.EntityFrameworkCore;
 using MiniItHelpdesk.Data;
 using MiniItHelpdesk.Models;
-using SQLitePCL;
 using System;
+using SQLitePCL;
 using System.Net.Sockets;
 
 public class TicketService : ITicketService
@@ -13,14 +14,16 @@ public class TicketService : ITicketService
         _context = context;
     }
 
-    public Task<List<TicketDto>> GetAllAsync()
+    public async Task<List<TicketDto>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var tickets = await _context.Tickets.ToListAsync();
+        return tickets.Select(MapToDto).ToList();
     }
 
-    public Task<TicketDto?> GetByIdAsync(int id)
+    public async Task<TicketDto?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var ticket = await _context.Tickets.FindAsync(id);
+        return ticket is null ? null : MapToDto(ticket);
     }
     public async Task<TicketDto?> CreateAsync(CreateTicketDto dto)
     {
@@ -52,9 +55,31 @@ public class TicketService : ITicketService
         };
     }
 
-    public Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
+    public async Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
     {
-        throw new NotImplementedException();
+        var ticket = await _context.Tickets.FindAsync(id);
+        if (ticket is null)
+            return null;
+
+        ticket.Title = dto.Title;
+        ticket.Description = dto.Description;
+        ticket.Priority = dto.Priority;
+        ticket.Category = dto.Category;
+
+        await _context.SaveChangesAsync();
+
+        return new TicketDto
+        {
+            Id = ticket.Id,
+            Title = ticket.Title,
+            Description = ticket.Description,
+            Status = ticket.Status,
+            Priority = ticket.Priority,
+            Category = ticket.Category,
+            CreatedAt = ticket.CreatedAt,
+            CreatedByUserId = ticket.CreatedByUserId,
+            AssignedToUserId = ticket.AssignedToUserId
+        };
     }
 
     public async Task<bool> DeleteAsync(int id)
@@ -67,5 +92,18 @@ public class TicketService : ITicketService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    private static TicketDto MapToDto(Ticket ticket) => new TicketDto
+    {
+        Id = ticket.Id,
+        Title = ticket.Title,
+        Description = ticket.Description,
+        Status = ticket.Status,
+        Priority = ticket.Priority,
+        Category = ticket.Category,
+        CreatedAt = ticket.CreatedAt,
+        CreatedByUserId = ticket.CreatedByUserId,
+        AssignedToUserId = ticket.AssignedToUserId
+    };
 }
 
