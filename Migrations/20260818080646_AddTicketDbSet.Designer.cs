@@ -11,7 +11,7 @@ using MiniItHelpdesk.Data;
 namespace MiniItHelpdesk.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260817092624_AddTicketDbSet")]
+    [Migration("20260818080646_AddTicketDbSet")]
     partial class AddTicketDbSet
     {
         /// <inheritdoc />
@@ -26,8 +26,18 @@ namespace MiniItHelpdesk.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("AssignedToUserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("CreatedByUserId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -45,6 +55,10 @@ namespace MiniItHelpdesk.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssignedToUserId");
+
+                    b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Tickets");
                 });
@@ -70,6 +84,20 @@ namespace MiniItHelpdesk.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MiniItHelpdesk.Models.Ticket", b =>
+                {
+                    b.HasOne("MiniItHelpdesk.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("AssignedToUserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("MiniItHelpdesk.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

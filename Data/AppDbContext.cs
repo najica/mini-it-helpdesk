@@ -30,6 +30,9 @@ namespace MiniItHelpdesk.Data
             modelBuilder.Entity<Ticket>().Property(t => t.Priority)
                 .HasConversion<string>()
                 .HasColumnType("TEXT");
+            modelBuilder.Entity<Ticket>().Property(t => t.Category)
+                .HasConversion<string>()
+                .HasColumnType("TEXT");
             modelBuilder.Entity<Ticket>()
                 .HasOne<User>()
                 .WithMany()
