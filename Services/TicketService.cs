@@ -1,5 +1,8 @@
-﻿using System;
 using MiniItHelpdesk.Data;
+using MiniItHelpdesk.Models;
+using SQLitePCL;
+using System;
+using System.Net.Sockets;
 
 public class TicketService : ITicketService
 {
@@ -19,10 +22,34 @@ public class TicketService : ITicketService
     {
         throw new NotImplementedException();
     }
-
-    public Task CreateAsync(CreateTicketDto dto)
+    public async Task<TicketDto?> CreateAsync(CreateTicketDto dto)
     {
-        throw new NotImplementedException();
+        var Ticket = new Ticket
+        {
+            Title = dto.Title,
+            Description = dto.Description,
+            Priority = dto.Priority,
+            Category = dto.TicketCategory,
+            CreatedByUserId = dto.CreatedByUserId,
+            AssignedToUserId = null,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Tickets.Add(Ticket);
+        await _context.SaveChangesAsync();
+
+        return new TicketDto
+        {
+            Id = Ticket.Id,
+            Title = Ticket.Title,
+            Description = Ticket.Description,
+            Priority = Ticket.Priority,
+            Category = Ticket.Category,
+            CreatedByUserId = Ticket.CreatedByUserId,
+            AssignedToUserId = Ticket.AssignedToUserId,
+            CreatedAt = Ticket.CreatedAt,
+            Status = Ticket.Status
+        };
     }
 
     public Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
