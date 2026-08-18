@@ -52,7 +52,7 @@ public class TicketService : ITicketService
         };
     }
 
-    public Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
+    public async Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto)
     {
         var ticket = await _context.Tickets.FindAsync(id);
         if (ticket is null)

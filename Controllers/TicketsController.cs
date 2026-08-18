@@ -13,6 +13,19 @@ namespace MiniItHelpdesk.Controllers
             _ticketService = ticketService;
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] UpdateTicketDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var updated = await _ticketService.UpdateAsync(id, dto);
+            if (updated is null)
+                return NotFound();
+
+            return Ok(updated);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
