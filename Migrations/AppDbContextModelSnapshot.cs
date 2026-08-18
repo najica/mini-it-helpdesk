@@ -17,6 +17,34 @@ namespace MiniItHelpdesk.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.15");
 
+            modelBuilder.Entity("MiniItHelpdesk.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TicketId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TicketId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("MiniItHelpdesk.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -145,6 +173,21 @@ namespace MiniItHelpdesk.Migrations
                             Name = "Direct Manager",
                             Role = "ITAgent"
                         });
+                });
+
+            modelBuilder.Entity("MiniItHelpdesk.Models.Comment", b =>
+                {
+                    b.HasOne("MiniItHelpdesk.Models.Ticket", null)
+                        .WithMany()
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MiniItHelpdesk.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MiniItHelpdesk.Models.Ticket", b =>
