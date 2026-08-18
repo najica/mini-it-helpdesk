@@ -13,6 +13,16 @@ namespace MiniItHelpdesk.Controllers
             _ticketService = ticketService;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateTicket([FromBody] CreateTicketDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var created = await _ticketService.CreateAsync(dto);
+            return StatusCode(201, created);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
