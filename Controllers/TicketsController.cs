@@ -30,6 +30,16 @@ namespace MiniItHelpdesk.Controllers
             return Ok(ticket);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateTicket([FromBody] CreateTicketDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var created = await _ticketService.CreateAsync(dto);
+            return StatusCode(201, created);
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, [FromBody] UpdateTicketDto dto)
         {
