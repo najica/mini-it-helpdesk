@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MiniItHelpdesk.DTOs;
+using MiniItHelpdesk.Enums;
+using System;
 
 public interface ITicketService
 {
@@ -7,4 +9,7 @@ public interface ITicketService
     Task<TicketDto?> CreateAsync(CreateTicketDto dto);
     Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto);
     Task<bool> DeleteAsync(int id);
+    Task<TicketDto?> ChangeStatusAsync(int id, ChangeStatusDto dto);
+    Task<List<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId);
+    Task<TicketDto?> AssignAsync(int id, AssignTicketDto dto);
 }
