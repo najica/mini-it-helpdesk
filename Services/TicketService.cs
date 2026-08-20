@@ -108,11 +108,24 @@ public class TicketService : ITicketService
         AssignedToUserId = ticket.AssignedToUserId
     };
 
-    public Task<TicketDto?> ChangeStatusAsync(int id, ChangeStatusDto dto)
+    public async Task<TicketDto?> ChangeStatusAsync(int id, ChangeStatusDto dto)
     {
-        throw new NotImplementedException();
-    }
+        var ticket = await _context.Tickets.FindAsync(id);
 
+        if (ticket is null)
+            return null;
+
+        if (ticket.Status == TicketStatus.Closed)
+        {
+            throw new InvalidOperationException(
+                "A closed ticket cannot change status.");
+        }
+
+        ticket.Status = dto.NewStatus;
+        await _context.SaveChangesAsync();
+
+        return MapToDto(ticket);
+    }
     public Task<List<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId)
     {
         throw new NotImplementedException();
