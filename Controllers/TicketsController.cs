@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MiniItHelpdesk.Enums;
 
 namespace MiniItHelpdesk.Controllers
 {
@@ -14,9 +15,12 @@ namespace MiniItHelpdesk.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TicketDto>>> GetAll()
+        public async Task<ActionResult<List<TicketDto>>> GetTickets([FromQuery] TicketStatus? status,
+                                            [FromQuery] TicketPriority? priority,
+                                            [FromQuery] TicketCategory? category,
+                                            [FromQuery] int? user)
         {
-            var tickets = await _ticketService.GetAllAsync();
+            var tickets = await _ticketService.SearchAsync(status, priority, category, user);
             return Ok(tickets);
         }
 
