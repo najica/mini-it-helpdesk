@@ -8,4 +8,4 @@ namespace MiniItHelpdesk.DTOs
         [Required, EnumDataType(typeof(TicketStatus))]
         public TicketStatus NewStatus { get; set; }
     }
-}
+}//
