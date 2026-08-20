@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MiniItHelpdesk.DTOs;
 
 namespace MiniItHelpdesk.Controllers
 {
@@ -61,6 +62,26 @@ namespace MiniItHelpdesk.Controllers
                 return NotFound();
 
             return NoContent();
+        }
+
+        [HttpPatch("{id}/status")]
+        public async Task<ActionResult<TicketDto>> ChangeStatus(int id, [FromBody] ChangeStatusDto dto){
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var updated = await _ticketService.ChangeStatusAsync(id, dto);
+
+                if (updated is null)
+                    return NotFound();
+
+                return Ok(updated);
+            }
+            catch (InvalidOperationException exception)
+            {
+                return Conflict(new { message = exception.Message });
+            }
         }
 
         [HttpGet("boom")]
