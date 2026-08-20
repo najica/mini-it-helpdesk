@@ -4,6 +4,8 @@ using MiniItHelpdesk.Models;
 using System;
 using SQLitePCL;
 using System.Net.Sockets;
+using MiniItHelpdesk.DTOs;
+using MiniItHelpdesk.Enums;
 
 public class TicketService : ITicketService
 {
@@ -105,5 +107,20 @@ public class TicketService : ITicketService
         CreatedByUserId = ticket.CreatedByUserId,
         AssignedToUserId = ticket.AssignedToUserId
     };
+
+    public Task<TicketDto?> ChangeStatusAsync(int id, ChangeStatusDto dto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<TicketDto?> AssignAsync(int id, AssignTicketDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }
 
