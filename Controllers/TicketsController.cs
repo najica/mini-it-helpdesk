@@ -62,5 +62,9 @@ namespace MiniItHelpdesk.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("boom")]
+        public IActionResult Boom() => throw new InvalidOperationException("namerna greška");
+
     }
 }

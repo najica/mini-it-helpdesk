@@ -1,9 +1,6 @@
-
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using MiniItHelpdesk.Data;
-using MiniItHelpdesk.Models;
-using System.Threading.Tasks;
+using MiniItHelpdesk.Middleware;
 using MiniItHelpdesk.Services;
 using System.Text.Json.Serialization;
 
@@ -36,10 +33,12 @@ namespace MiniItHelpdesk
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var app = builder.Build();          
+            var app = builder.Build();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             // Configure the HTTP request pipeline.
-          //  if (app.Environment.IsDevelopment())
+            //  if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
                 app.UseSwagger();
@@ -50,10 +49,9 @@ namespace MiniItHelpdesk
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }
