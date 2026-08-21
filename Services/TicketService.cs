@@ -138,9 +138,20 @@ public class TicketService : ITicketService
         return tickets.Select(MapToDto).ToList();
     }
 
-    public Task<TicketDto?> AssignAsync(int id, AssignTicketDto dto)
+    public async Task<TicketDto?> AssignAsync(int id, AssignTicketDto dto)
     {
-        throw new NotImplementedException();
+        var ticket = await _context.Tickets.FindAsync(id);
+        if (ticket is null)
+            return null;
+
+        var user = await _context.Users.FindAsync(dto.AssignedToUserId);
+        if (user is null || user.Role != User.UserRole.ITAgent)
+            return null;
+
+        ticket.AssignedToUserId = dto.AssignedToUserId;
+        await _context.SaveChangesAsync();
+
+        return MapToDto(ticket);
     }
 }
 
