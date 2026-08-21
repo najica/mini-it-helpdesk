@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MiniItHelpdesk.Enums;
 using MiniItHelpdesk.DTOs;
 
 namespace MiniItHelpdesk.Controllers
@@ -15,9 +16,12 @@ namespace MiniItHelpdesk.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TicketDto>>> GetAll()
+        public async Task<ActionResult<List<TicketDto>>> GetTickets([FromQuery] TicketStatus? status,
+                                            [FromQuery] TicketPriority? priority,
+                                            [FromQuery] TicketCategory? category,
+                                            [FromQuery] int? user)
         {
-            var tickets = await _ticketService.GetAllAsync();
+            var tickets = await _ticketService.SearchAsync(status, priority, category, user);
             return Ok(tickets);
         }
 
@@ -85,7 +89,7 @@ namespace MiniItHelpdesk.Controllers
         }
 
         [HttpGet("boom")]
-        public IActionResult Boom() => throw new InvalidOperationException("namerna greška");
+        public IActionResult Boom() => throw new InvalidOperationException("namerna greï¿½ka");
 
     }
 }
