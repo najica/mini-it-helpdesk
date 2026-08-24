@@ -22,6 +22,7 @@ public class CommentService : ICommentService
         var comments = await _context.Comments.ToListAsync();
         return comments.Select(c => new CommentDto
         {
+            Text = c.Text,
             Id = c.Id,
             CreatedAt = c.CreatedAt,
             TicketId = c.TicketId,
@@ -45,6 +46,7 @@ public class CommentService : ICommentService
     {
         var comment = new Comment
         {
+            Text = dto.Text,
             TicketId = dto.TicketId,
             UserId = dto.UserId,
             CreatedAt = DateTime.UtcNow
@@ -53,6 +55,7 @@ public class CommentService : ICommentService
         await _context.SaveChangesAsync();
         return new CommentDto
         {
+            Text = comment.Text,
             Id = comment.Id,
             CreatedAt = comment.CreatedAt,
             TicketId = comment.TicketId,
