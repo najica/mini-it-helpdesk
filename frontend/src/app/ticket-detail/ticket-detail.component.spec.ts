@@ -4,11 +4,13 @@ import { of, throwError } from 'rxjs';
 import { TicketDetailComponent } from './ticket-detail.component';
 import { TicketService } from '../services/ticket.service';
 import { Ticket } from '../models/ticket.model';
+import { Comment, CommentService } from '../comment.service';
 
 describe('TicketDetailComponent', () => {
   let component: TicketDetailComponent;
   let fixture: ComponentFixture<TicketDetailComponent>;
   let mockTicketService: jasmine.SpyObj<TicketService>;
+  let mockCommentService: jasmine.SpyObj<CommentService>;
 
   const mockTicket: Ticket = {
     id: 1,
@@ -22,14 +24,33 @@ describe('TicketDetailComponent', () => {
     assignedToUserId: null
   };
 
+  const mockComments: Comment[] = [
+    {
+      id: 10,
+      ticketId: 1,
+      userId: 2,
+      text: 'Prvi komentar na tiketu.',
+      createdAt: '2026-08-24T11:00:00Z'
+    },
+    {
+      id: 11,
+      ticketId: 1,
+      userId: 3,
+      text: 'Drugi komentar na tiketu.',
+      createdAt: '2026-08-24T12:30:00Z'
+    }
+  ];
+
   beforeEach(async () => {
     mockTicketService = jasmine.createSpyObj('TicketService', ['getById']);
+    mockCommentService = jasmine.createSpyObj('CommentService', ['getByTicketId']);
 
     await TestBed.configureTestingModule({
       declarations: [TicketDetailComponent],
       imports: [RouterModule.forRoot([])],
       providers: [
         { provide: TicketService, useValue: mockTicketService },
+        { provide: CommentService, useValue: mockCommentService },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -47,6 +68,7 @@ describe('TicketDetailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TicketDetailComponent);
     component = fixture.componentInstance;
+    mockCommentService.getByTicketId.and.returnValue(of([]));
   });
 
   it('should create the component', () => {
@@ -79,6 +101,43 @@ describe('TicketDetailComponent', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Greška pri učitavanju detalja tiketa.');
+  });
+
+  it('should load and render comments for the ticket', () => {
+    mockTicketService.getById.and.returnValue(of(mockTicket));
+    mockCommentService.getByTicketId.and.returnValue(of(mockComments));
+    fixture.detectChanges();
+
+    expect(mockCommentService.getByTicketId).toHaveBeenCalledWith(1);
+    expect(component.comments.length).toBe(2);
+    expect(component.commentsLoading).toBeFalse();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelectorAll('.comment-item').length).toBe(2);
+    expect(compiled.textContent).toContain('Prvi komentar na tiketu.');
+    expect(compiled.textContent).toContain('Korisnik #3');
+  });
+
+  it('should show empty message when there are no comments', () => {
+    mockTicketService.getById.and.returnValue(of(mockTicket));
+    mockCommentService.getByTicketId.and.returnValue(of([]));
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelectorAll('.comment-item').length).toBe(0);
+    expect(compiled.textContent).toContain('Nema komentara');
+  });
+
+  it('should handle error when comment service fails', () => {
+    mockTicketService.getById.and.returnValue(of(mockTicket));
+    mockCommentService.getByTicketId.and.returnValue(throwError(() => new Error('boom')));
+    fixture.detectChanges();
+
+    expect(component.comments).toEqual([]);
+    expect(component.commentsErrorMessage).toBe('Greška pri učitavanju komentara.');
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Greška pri učitavanju komentara.');
   });
 });
 

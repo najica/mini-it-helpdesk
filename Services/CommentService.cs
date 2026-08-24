@@ -36,10 +36,28 @@ public class CommentService : ICommentService
         return comment is null ? null : new CommentDto
         {
             Id = comment.Id,
+            Text = comment.Text,
             CreatedAt = comment.CreatedAt,
             TicketId = comment.TicketId,
             UserId = comment.UserId
         };
+    }
+
+    public async Task<List<CommentDto>> GetByTicketIdAsync(int ticketId)
+    {
+        var comments = await _context.Comments
+            .Where(c => c.TicketId == ticketId)
+            .OrderBy(c => c.CreatedAt)
+            .ToListAsync();
+
+        return comments.Select(c => new CommentDto
+        {
+            Id = c.Id,
+            TicketId = c.TicketId,
+            UserId = c.UserId,
+            Text = c.Text,
+            CreatedAt = c.CreatedAt
+        }).ToList();
     }
 
     public async Task<CommentDto?> CreateAsync(CreateCommentDto dto)

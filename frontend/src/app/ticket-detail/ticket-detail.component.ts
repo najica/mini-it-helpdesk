@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Ticket } from '../models/ticket.model';
 import { TicketService } from '../services/ticket.service';
+import { Comment, CommentService } from '../comment.service';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -14,9 +15,14 @@ export class TicketDetailComponent implements OnInit {
   loading = true;
   errorMessage = '';
 
+  comments: Comment[] = [];
+  commentsLoading = false;
+  commentsErrorMessage = '';
+
   constructor(
     private route: ActivatedRoute,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private commentService: CommentService
   ) {}
 
   ngOnInit(): void {
@@ -25,6 +31,7 @@ export class TicketDetailComponent implements OnInit {
 
     if (ticketId) {
       this.loadTicket(ticketId);
+      this.loadComments(ticketId);
     } else {
       this.loading = false;
       this.errorMessage = 'Nevažeći ID tiketa.';
@@ -42,6 +49,22 @@ export class TicketDetailComponent implements OnInit {
       error: () => {
         this.errorMessage = 'Greška pri učitavanju detalja tiketa.';
         this.loading = false;
+      }
+    });
+  }
+
+  loadComments(ticketId: number): void {
+    this.commentsLoading = true;
+    this.commentsErrorMessage = '';
+    this.commentService.getByTicketId(ticketId).subscribe({
+      next: (comments) => {
+        this.comments = comments ?? [];
+        this.commentsLoading = false;
+      },
+      error: () => {
+        this.comments = [];
+        this.commentsErrorMessage = 'Greška pri učitavanju komentara.';
+        this.commentsLoading = false;
       }
     });
   }

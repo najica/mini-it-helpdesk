@@ -45,6 +45,32 @@
       <label>Opis:</label>
       <p>{{ ticket.description }}</p>
     </div>
+
+    <div class="comments-section">
+      <h4>Komentari</h4>
+
+      <div *ngIf="commentsLoading" class="comments-state">
+        <p>Učitavanje komentara...</p>
+      </div>
+
+      <div *ngIf="commentsErrorMessage && !commentsLoading" class="comments-state comments-error">
+        <p>{{ commentsErrorMessage }}</p>
+      </div>
+
+      <div *ngIf="!commentsLoading && !commentsErrorMessage && comments.length === 0" class="comments-state">
+        <p>Nema komentara</p>
+      </div>
+
+      <ul *ngIf="!commentsLoading && !commentsErrorMessage && comments.length > 0" class="comment-list">
+        <li *ngFor="let comment of comments" class="comment-item">
+          <div class="comment-meta">
+            <span class="comment-author">Korisnik #{{ comment.userId }}</span>
+            <span class="comment-date">{{ comment.createdAt | date:'dd.MM.yyyy. HH:mm' }}</span>
+          </div>
+          <p class="comment-text">{{ comment.text }}</p>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 
