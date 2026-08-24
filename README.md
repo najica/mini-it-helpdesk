@@ -501,3 +501,29 @@ Vraća listu svih korisnika.
 ### Napomene
 Autentifikacija nije implementirana u Sprint 1.
 CreatedByUserId se prosleđuje ručno prilikom kreiranja problema.
+
+---
+
+# 15. Sprint 2
+
+### API endpoint-i
+
+- GET /api/Tickets?status={status}&priority={priority}&category={category}&user={user} <br>
+Vraća listu problema filtriranu po statusu, prioritetu, kategoriji i korisniku.
+- PATCH /api/Tickets/{id}/assign <br>
+Dodeljuje problem IT podršci (AssignedToUserId).
+- PATCH /api/Tickets/{id}/status <br>
+Ažurira status problema (Open, InProgress, Closed).
+- GET /api/Tickets/{id}/comments <br>
+Vraća listu komentara za dati problem.
+- POST /api/Tickets/{id}/comments <br>
+Dodaje komentar na dati problem.
+
+### Modeli
+
+- Comment
+  - Id (int)
+  - TicketId (int): ID problema na koji se komentar odnosi
+  - UserId (int): ID korisnika koji je napisao komentar
+  - Text (string): Sadržaj komentara
+  - CreatedAt (DateTime): Datum i vreme kada je komentar kreiran
