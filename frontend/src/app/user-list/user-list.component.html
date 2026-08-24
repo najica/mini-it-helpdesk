@@ -1,44 +1,25 @@
-<div class="user-list-container">
-  <div class="header-section">
-    <h2>Lista korisnika</h2>
-  </div>
+<div class="user-list">
+  <h2>Korisnici</h2>
 
-  <div *ngIf="loading" class="loading-state">
-    <p>Učitavanje korisnika...</p>
-  </div>
+  <p *ngIf="loading">Učitavanje...</p>
+  <p *ngIf="error" class="error">{{ error }}</p>
 
-  <div *ngIf="errorMessage && !loading" class="error-state">
-    <p>{{ errorMessage }}</p>
-  </div>
+  <table *ngIf="!loading && !error && users.length">
+    <thead>
+      <tr>
+        <th>Ime</th>
+        <th>Email</th>
+        <th>Uloga</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-  <div *ngIf="!loading && !errorMessage && users.length === 0" class="empty-state">
-    <p>Nema dostupnih korisnika.</p>
-  </div>
-
-  <div *ngIf="!loading && !errorMessage && users.length > 0" class="table-responsive">
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>Ime</th>
-          <th>Email</th>
-          <th>Uloga</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td class="user-name">
-            {{ user.name }}
-          </td>
-          <td>
-            {{ user.email }}
-          </td>
-          <td>
-            <span class="badge badge-role" [ngClass]="'role-' + (user.role ? user.role.toLowerCase() : '')">
-              {{ user.role }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <p *ngIf="!loading && !error && !users.length">Nema korisnika za prikaz.</p>
 </div>
