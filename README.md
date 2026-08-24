@@ -518,6 +518,12 @@ Ažurira status problema (Open, InProgress, Closed).
 Vraća listu komentara za dati problem.
 - POST /api/Tickets/\{id\/comments <br>
 Dodaje komentar na dati problem.
+- GET /api/Comments/\{id\} <br>
+Vraća detalje o jednom komentaru po ID-u.
+- POST /api/Comments <br>
+Kreira novi komentar.
+- GET /api/Comments <br>
+Vraća listu svih komentara.
 
 ### Modeli
 
