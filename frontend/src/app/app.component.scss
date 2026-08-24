@@ -1,0 +1,36 @@
+.app-navbar {
+  background-color: #eff6ff;
+  border-bottom: 1px solid #dbeafe;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  .app-navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    display: inline-block;
+    padding: 1rem 1.25rem;
+    color: #475569;
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s ease-in-out, border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+    &:hover {
+      color: #1d4ed8;
+      background-color: rgba(37, 99, 235, 0.06);
+    }
+
+    &.active {
+      color: #1d4ed8;
+      font-weight: 600;
+      border-bottom-color: #2563eb;
+    }
+  }
+}
