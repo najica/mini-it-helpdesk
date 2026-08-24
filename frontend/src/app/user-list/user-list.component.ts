@@ -1,40 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-list',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './user-list.component.html'
+  templateUrl: './user-list.component.html',
+  standalone: false,
+  styleUrl: './user-list.component.scss'
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
-  loading = false;
-  error: string | null = null;
+  loading = true;
+  errorMessage = '';
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
     this.loading = true;
+    this.errorMessage = '';
     this.userService.getAll().subscribe({
-      next: (users) => {
-        this.users = users;
+      next: (data) => {
+        this.users = data || [];
         this.loading = false;
       },
-      error: (err) => {
-        this.error = 'Greška prilikom učitavanja korisnika.';
+      error: () => {
+        this.errorMessage = 'Greška pri učitavanju korisnika.';
         this.loading = false;
-        console.error(err);
       }
     });
   }
-}
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-
 }
