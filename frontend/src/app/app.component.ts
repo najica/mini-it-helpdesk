@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HealthService } from './health.service';
+import { NavComponent } from './nav/nav.component';
 
 @Component({
   selector: 'app-root',
