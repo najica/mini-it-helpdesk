@@ -2,19 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Ticket } from '../models/ticket.model';
 
-export interface Ticket {
-  id: number;
-  title: string;
-  description: string;
-  status: string;
-  priority: string;
-  createdAt: string;
-  updatedAt?: string;
-  assignedTo?: string;
-  createdBy?: string;
-  category?: string;
-}
+export type { Ticket };
 
 export interface TicketSearchFilters {
   status?: string;
