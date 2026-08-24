@@ -1,0 +1,27 @@
+.user-list-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  .header-section {
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin: 0;
+      color: #1a202c;
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+  }
+
+  .content-section {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    color: #475569;
+  }
+}
+
