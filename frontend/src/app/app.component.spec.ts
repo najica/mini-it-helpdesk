@@ -1,9 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
+import { HealthService } from './health.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
+    const healthServiceSpy = jasmine.createSpyObj('HealthService', ['check']);
+    healthServiceSpy.check.and.returnValue(of({ status: 'Healthy', application: 'MiniItHelpdesk' }));
+
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([])
@@ -11,6 +16,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: HealthService, useValue: healthServiceSpy }
+      ]
     }).compileComponents();
   });
 

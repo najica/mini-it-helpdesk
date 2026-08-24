@@ -1,0 +1,180 @@
+.ticket-list-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  .header-section {
+    margin-bottom: 1.5rem;
+
+    h2 {
+      margin: 0;
+      color: #1a202c;
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+  }
+
+  .loading-state,
+  .error-state,
+  .empty-state {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    color: #64748b;
+    font-size: 1rem;
+    margin: 1rem 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .error-state {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #dc2626;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+  }
+
+  .ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+
+    thead {
+      background-color: #f8fafc;
+      border-bottom: 2px solid #e2e8f0;
+
+      th {
+        padding: 0.875rem 1rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #475569;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #e2e8f0;
+        transition: background-color 0.15s ease-in-out;
+
+        &:hover {
+          background-color: #f8fafc;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        td {
+          padding: 0.875rem 1rem;
+          font-size: 0.9375rem;
+          color: #334155;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    .ticket-title {
+      font-weight: 500;
+
+      .ticket-link {
+        color: #2563eb;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .btn-details {
+      display: inline-block;
+      padding: 0.375rem 0.75rem;
+      background-color: #2563eb;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #1d4ed8;
+      }
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.625rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    /* Status Badges */
+    .badge-status {
+      &.status-open {
+        background-color: #dbeafe;
+        color: #1e40af;
+      }
+
+      &.status-inprogress {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+
+      &.status-resolved {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      &.status-closed {
+        background-color: #f1f5f9;
+        color: #475569;
+      }
+    }
+
+    /* Priority Badges */
+    .badge-priority {
+      &.priority-low {
+        background-color: #f0fdf4;
+        color: #15803d;
+      }
+
+      &.priority-medium {
+        background-color: #fefce8;
+        color: #a16207;
+      }
+
+      &.priority-high {
+        background-color: #fff7ed;
+        color: #c2410c;
+      }
+
+      &.priority-critical {
+        background-color: #fef2f2;
+        color: #b91c1c;
+      }
+
+      &.priority-none {
+        background-color: #f1f5f9;
+        color: #64748b;
+      }
+    }
+  }
+}
+

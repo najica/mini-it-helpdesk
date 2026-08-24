@@ -59,9 +59,12 @@ namespace MiniItHelpdesk
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseCors(FrontendCorsPolicy);
+
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseAuthorization();
 

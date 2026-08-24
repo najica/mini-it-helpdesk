@@ -1,0 +1,61 @@
+<div class="ticket-list-container">
+  <div class="header-section">
+    <h2>Lista tiketa</h2>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <p>Učitavanje tiketa...</p>
+  </div>
+
+  <div *ngIf="errorMessage && !loading" class="error-state">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && tickets.length === 0" class="empty-state">
+    <p>Nema dostupnih tiketa.</p>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && tickets.length > 0" class="table-responsive">
+    <table class="ticket-table">
+      <thead>
+        <tr>
+          <th>Naslov</th>
+          <th>Status</th>
+          <th>Prioritet</th>
+          <th>Kategorija</th>
+          <th>Datum kreiranja</th>
+          <th>Akcije</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <td class="ticket-title">
+            <a [routerLink]="['/tickets', ticket.id]" class="ticket-link">{{ ticket.title }}</a>
+          </td>
+          <td>
+            <span class="badge badge-status" [ngClass]="'status-' + (ticket.status ? ticket.status.toLowerCase() : '')">
+              {{ ticket.status }}
+            </span>
+          </td>
+          <td>
+            <span class="badge badge-priority" [ngClass]="'priority-' + (ticket.priority ? ticket.priority.toLowerCase() : 'none')">
+              {{ ticket.priority || 'N/A' }}
+            </span>
+          </td>
+          <td>
+            <span class="category-text">{{ ticket.category }}</span>
+          </td>
+          <td>
+            {{ ticket.createdAt | date:'dd.MM.yyyy. HH:mm' }}
+          </td>
+          <td>
+            <a [routerLink]="['/tickets', ticket.id]" class="btn-details">
+              Detalji
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

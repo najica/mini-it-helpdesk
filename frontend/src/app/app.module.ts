@@ -4,10 +4,12 @@ import { provideHttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TicketListComponent } from './ticket-list/ticket-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TicketListComponent
   ],
   imports: [
     BrowserModule,
@@ -19,3 +21,4 @@ import { AppComponent } from './app.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

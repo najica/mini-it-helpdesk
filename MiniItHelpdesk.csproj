@@ -4,7 +4,16 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>5.7</TypeScriptToolsVersion>
+    <EnableDefaultTypeScriptItems>false</EnableDefaultTypeScriptItems>
   </PropertyGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="**" />
+    <Content Remove="frontend\**" />
+    <None Remove="frontend\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.15" />
@@ -18,6 +27,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="frontend\src\app\" />
   </ItemGroup>
 
 </Project>
