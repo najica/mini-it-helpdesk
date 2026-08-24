@@ -14,12 +14,13 @@ import { UserListComponent } from './user-list/user-list.component';
     AppComponent,
     TicketListComponent,
     TicketDetailComponent,
-    UserListComponent
+    
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    UserListComponent
   ],
   providers: [
     provideHttpClient()
