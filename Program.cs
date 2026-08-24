@@ -28,6 +28,7 @@ namespace MiniItHelpdesk
 
             builder.Services.AddScoped<ITicketService, TicketService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite(
