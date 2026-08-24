@@ -12,6 +12,19 @@ namespace MiniItHelpdesk
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            const string FrontendCorsPolicy = "FrontendCorsPolicy";
+            var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(FrontendCorsPolicy, policy =>
+                {
+                    policy.WithOrigins(allowedOrigins)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             // Add services to the container.
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
@@ -46,6 +59,8 @@ namespace MiniItHelpdesk
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(FrontendCorsPolicy);
 
             app.UseAuthorization();
 

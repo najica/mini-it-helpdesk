@@ -1,17 +1,29 @@
 ﻿# Mini IT Help Desk
 
-Studentski projekat za praksu — ASP.NET Core Web API backend.
+Studentski projekat za praksu — ASP.NET Core Web API backend i Angular frontend aplikacija.
 
 Cilj projekta je napraviti jednostavan sistem za prijavu i obradu IT problema zaposlenih.
 
 ## Tehnologije
 
+**Backend**
+
 * .NET 9
 * ASP.NET Core Web API
 * Entity Framework Core 9
 * SQLite
+* OpenAPI / Swagger
+
+**Frontend**
+
+* Angular 19
+* TypeScript
+* RxJS
+* Node.js / npm
+
+**Ostalo**
+
 * Git / GitHub
-* OpenAPI
 
 ---
 
@@ -213,7 +225,67 @@ OpenAPI će kasnije omogućiti pregled i testiranje API endpoint-a.
 
 ---
 
-# 8. EF Core migrations
+# 8. Frontend setup (Angular)
+
+Frontend aplikacija se nalazi u folderu:
+
+```text
+frontend/
+```
+
+### Preduslovi
+
+* Node.js (LTS verzija) i npm
+
+Provera instalacije:
+
+```bash
+node --version
+npm --version
+```
+
+### Instalacija paketa
+
+Uđite u frontend folder i instalirajte pakete:
+
+```bash
+cd frontend
+npm install
+```
+
+### Pokretanje frontend aplikacije
+
+```bash
+npm start
+```
+
+Ovo pokreće Angular dev server (`ng serve`), dostupan na:
+
+```text
+http://localhost:4200
+```
+
+### Konekcija sa backend-om
+
+U dev modu, frontend zove backend na adresi definisanoj u:
+
+```text
+frontend/src/environments/environment.development.ts
+```
+
+```text
+apiUrl: 'http://localhost:5197/api'
+```
+
+Da bi frontend mogao da povuče podatke, **backend mora biti pokrenut** (`dotnet run` ili iz Visual Studio-a, profil `http`, port `5197`).
+
+CORS je već podešen u `appsettings.Development.json` da dozvoli pozive sa `http://localhost:4200`.
+
+Ako je backend pokrenut na drugom portu, potrebno je ažurirati `apiUrl` u `environment.development.ts`.
+
+---
+
+# 9. EF Core migrations
 
 Migration fajlovi se nalaze u:
 
@@ -247,7 +319,7 @@ SQLite baza `helpdesk.db` se ne čuva na GitHub-u.
 
 ---
 
-# 9. Git workflow
+# 10. Git workflow
 
 Pre početka rada proverite da li imate najnoviju verziju projekta:
 
@@ -281,7 +353,7 @@ git push
 
 ---
 
-# 10. Preporučeni workflow
+# 11. Preporučeni workflow
 
 Za svaki task koristite sledeći redosled:
 
@@ -313,7 +385,7 @@ git push
 
 ---
 
-# 11. Struktura projekta
+# 12. Struktura projekta
 
 ```text
 MiniItHelpdesk
@@ -333,6 +405,13 @@ MiniItHelpdesk
 │
 ├── .config
 │   └── dotnet-tools.json
+│
+├── frontend
+│   ├── src
+│   │   ├── app
+│   │   └── environments
+│   ├── angular.json
+│   └── package.json
 │
 ├── Program.cs
 ├── appsettings.json
@@ -367,9 +446,13 @@ EF Core `DbContext` i konfiguracija pristupa bazi.
 
 EF Core istorija promena strukture baze.
 
+### frontend
+
+Angular aplikacija (klijent). Detalji o pokretanju su u sekciji [8. Frontend setup (Angular)](#8-frontend-setup-angular).
+
 ---
 
-# 12. Projekat
+# 13. Projekat
 
 Glavni zadatak je razvoj **Mini IT Help Desk** sistema.
 
@@ -379,7 +462,7 @@ Detaljni zahtevi i taskovi biće definisani tokom prakse.
 
 ---
 
-# 13. Sprint 1
+# 14. Sprint 1
 
 ### API endpoint-i
 

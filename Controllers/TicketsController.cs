@@ -91,5 +91,17 @@ namespace MiniItHelpdesk.Controllers
         [HttpGet("boom")]
         public IActionResult Boom() => throw new InvalidOperationException("namerna gre�ka");
 
+        [HttpPatch("{id}/assign")]
+        public async Task<IActionResult> Assign(int id, [FromBody] AssignTicketDto dto)
+        {
+            //if (!ModelState.IsValid)
+            //    return BadRequest(ModelState);    mrtav kod jer je provera default zbog [ApiController] atributa
+
+            var assigned = await _ticketService.AssignAsync(id, dto);
+            if (assigned is null)
+                return NotFound();
+
+            return Ok(assigned);
+        }
     }
 }
