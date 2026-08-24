@@ -468,13 +468,13 @@ Detaljni zahtevi i taskovi biće definisani tokom prakse.
 
 - GET /api/Tickets <br>
 Vraća listu svih prijavljenih problema (tickets).
-- GET /api/Tickets/{id} <br>
+- GET /api/Tickets/\{id\} <br>
 Vraća detalje o jednom problemu po ID-u.
 - POST /api/Tickets <br>
 Kreira novi problem.
-- PUT /api/Tickets/{id} <br>
+- PUT /api/Tickets/\{id\} <br>
 Ažurira postojeći problem.
-- DELETE /api/Tickets/{id} <br>
+- DELETE /api/Tickets/\{id\} <br>
 Briše problem.
 - GET /api/Users <br>
 Vraća listu svih korisnika.
@@ -508,15 +508,15 @@ CreatedByUserId se prosleđuje ručno prilikom kreiranja problema.
 
 ### API endpoint-i
 
-- GET /api/Tickets?status={status}&priority={priority}&category={category}&user={user} <br>
+- GET /api/Tickets?status=\{status\}&priority=\{priority\}&category=\{category\}&user=\{user\} <br>
 Vraća listu problema filtriranu po statusu, prioritetu, kategoriji i korisniku.
-- PATCH /api/Tickets/{id}/assign <br>
+- PATCH /api/Tickets/\{id\}/assign <br>
 Dodeljuje problem IT podršci (AssignedToUserId).
-- PATCH /api/Tickets/{id}/status <br>
+- PATCH /api/Tickets/\{id\/status <br>
 Ažurira status problema (Open, InProgress, Closed).
-- GET /api/Tickets/{id}/comments <br>
+- GET /api/Tickets/\{id\/comments <br>
 Vraća listu komentara za dati problem.
-- POST /api/Tickets/{id}/comments <br>
+- POST /api/Tickets/\{id\/comments <br>
 Dodaje komentar na dati problem.
 
 ### Modeli
