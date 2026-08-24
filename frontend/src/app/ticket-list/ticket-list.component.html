@@ -3,6 +3,44 @@
     <h2>Lista tiketa</h2>
   </div>
 
+  <div class="filters-section">
+    <div class="filter-field">
+      <label for="filter-status">Status</label>
+      <select id="filter-status" name="filter-status" [(ngModel)]="filterStatus" (ngModelChange)="search()">
+        <option [ngValue]="null">Sve</option>
+        <option *ngFor="let status of statusOptions" [ngValue]="status">{{ status }}</option>
+      </select>
+    </div>
+
+    <div class="filter-field">
+      <label for="filter-priority">Prioritet</label>
+      <select id="filter-priority" name="filter-priority" [(ngModel)]="filterPriority" (ngModelChange)="search()">
+        <option [ngValue]="null">Sve</option>
+        <option *ngFor="let priority of priorityOptions" [ngValue]="priority">{{ priority }}</option>
+      </select>
+    </div>
+
+    <div class="filter-field">
+      <label for="filter-category">Kategorija</label>
+      <select id="filter-category" name="filter-category" [(ngModel)]="filterCategory" (ngModelChange)="search()">
+        <option [ngValue]="null">Sve</option>
+        <option *ngFor="let category of categoryOptions" [ngValue]="category">{{ category }}</option>
+      </select>
+    </div>
+
+    <div class="filter-field">
+      <label for="filter-user">ID korisnika</label>
+      <input
+        id="filter-user"
+        name="filter-user"
+        type="number"
+        min="1"
+        placeholder="Svi korisnici"
+        [(ngModel)]="filterUser"
+        (ngModelChange)="search()" />
+    </div>
+  </div>
+
   <div *ngIf="loading" class="loading-state">
     <p>Učitavanje tiketa...</p>
   </div>
