@@ -1,23 +1,46 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Ticket } from '../models/ticket.model';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TicketService {
-  private readonly apiUrl = `${environment.apiUrl}/tickets`;
+export type { Ticket };
 
-  constructor(private http: HttpClient) {}
+export interface TicketSearchFilters {
+  status?: string;
+  priority?: string;
+  category?: string;
+  user?: number;
+}
+
+@Injectable({ providedIn: 'root' })
+export class TicketService {
+  private readonly baseUrl = `${environment.apiUrl}/Tickets`;
+
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<Ticket[]> {
-    return this.http.get<Ticket[]>(this.apiUrl);
+    return this.http.get<Ticket[]>(this.baseUrl);
+  }
+
+  search(filters: TicketSearchFilters): Observable<Ticket[]> {
+    const params = this.buildParams(filters);
+    return this.http.get<Ticket[]>(this.baseUrl, { params });
   }
 
   getById(id: number): Observable<Ticket> {
-    return this.http.get<Ticket>(`${this.apiUrl}/${id}`);
+    return this.http.get<Ticket>(`${this.baseUrl}/${id}`);
+  }
+
+  private buildParams(filters: TicketSearchFilters): HttpParams {
+    let params = new HttpParams();
+
+    Object.entries(filters ?? {}).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        params = params.set(key, String(value));
+      }
+    });
+
+    return params;
   }
 }
-
