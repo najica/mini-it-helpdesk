@@ -1,0 +1,50 @@
+<div class="ticket-detail-container">
+  <div class="header-section">
+    <a routerLink="/tickets" class="btn-back">&larr; Nazad na listu</a>
+    <h2>Detalji tiketa</h2>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <p>Učitavanje detalja tiketa...</p>
+  </div>
+
+  <div *ngIf="errorMessage && !loading" class="error-state">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && ticket" class="detail-card">
+    <div class="detail-header">
+      <h3>{{ ticket.title }}</h3>
+      <span class="badge badge-status" [ngClass]="'status-' + (ticket.status ? ticket.status.toLowerCase() : '')">
+        {{ ticket.status }}
+      </span>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-item">
+        <label>ID:</label>
+        <span>#{{ ticket.id }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Prioritet:</label>
+        <span class="badge badge-priority" [ngClass]="'priority-' + (ticket.priority ? ticket.priority.toLowerCase() : 'none')">
+          {{ ticket.priority || 'N/A' }}
+        </span>
+      </div>
+      <div class="detail-item">
+        <label>Kategorija:</label>
+        <span>{{ ticket.category }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Datum kreiranja:</label>
+        <span>{{ ticket.createdAt | date:'dd.MM.yyyy. HH:mm' }}</span>
+      </div>
+    </div>
+
+    <div class="detail-description">
+      <label>Opis:</label>
+      <p>{{ ticket.description }}</p>
+    </div>
+  </div>
+</div>
+
