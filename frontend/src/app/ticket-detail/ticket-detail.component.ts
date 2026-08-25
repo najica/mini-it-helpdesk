@@ -22,7 +22,6 @@ export class TicketDetailComponent implements OnInit {
   commentsLoading = false;
   commentsErrorMessage = '';
 
-  showEditModal = false;
   users: User[] = [];
 
   newCommentText = '';
@@ -30,12 +29,15 @@ export class TicketDetailComponent implements OnInit {
   submittingComment = false;
   newCommentErrorMessage = '';
 
+  // VRAĆENA PROMENLJIVA ZA MODAL:
+  showEditModal = false;
+
   constructor(
     private route: ActivatedRoute,
     private ticketService: TicketService,
     private commentService: CommentService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -133,8 +135,8 @@ export class TicketDetailComponent implements OnInit {
       }
     });
   }
-}
 
+  // VRAĆENE METODE ZA OTVARANJE MODALA I OSVEŽAVANJE:
   openEditModal(): void {
     this.showEditModal = true;
   }
