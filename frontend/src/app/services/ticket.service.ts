@@ -32,6 +32,26 @@ export class TicketService {
     return this.http.get<Ticket>(`${this.baseUrl}/${id}`);
   }
 
+  create(dto: Partial<Ticket>): Observable<Ticket> {
+    return this.http.post<Ticket>(this.baseUrl, dto);
+  }
+
+  update(id: number, dto: Partial<Ticket>): Observable<Ticket> {
+    return this.http.put<Ticket>(`${this.baseUrl}/${id}`, dto);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  changeStatus(id: number, dto: Partial<Ticket>): Observable<Ticket> {
+    return this.http.patch<Ticket>(`${this.baseUrl}/${id}/status`, dto);
+  }
+
+  assignUser(id: number, dto: Partial<Ticket>): Observable<Ticket> {
+    return this.http.patch<Ticket>(`${this.baseUrl}/${id}/assign`, dto);
+  }
+
   private buildParams(filters: TicketSearchFilters): HttpParams {
     let params = new HttpParams();
 
