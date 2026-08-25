@@ -21,7 +21,8 @@ import { CreateTicketFormComponent } from './create-ticket-form/create-ticket-fo
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TicketListComponent    // TicketListComponent added here
   ],
   providers: [
     provideHttpClient()
