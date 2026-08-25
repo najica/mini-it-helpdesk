@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { CreateTicketDto } from '../dtos/create-ticket.dto';
 import { Ticket } from '../models/ticket.model';
 
 export type { Ticket };
@@ -30,6 +31,26 @@ export class TicketService {
 
   getById(id: number): Observable<Ticket> {
     return this.http.get<Ticket>(`${this.baseUrl}/${id}`);
+  }
+
+  create(dto: CreateTicketDto): Observable<Ticket> {
+    return this.http.post<Ticket>(this.baseUrl, dto);
+  }
+
+  update(id: number, dto: Partial<Ticket>): Observable<Ticket> {
+    return this.http.put<Ticket>(`${this.baseUrl}/${id}`, dto);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  changeStatus(id: number, dto: Partial<Ticket>): Observable<Ticket> {
+    return this.http.patch<Ticket>(`${this.baseUrl}/${id}/status`, dto);
+  }
+
+  assignUser(id: number, dto: Partial<Ticket>): Observable<Ticket> {
+    return this.http.patch<Ticket>(`${this.baseUrl}/${id}/assign`, dto);
   }
 
   private buildParams(filters: TicketSearchFilters): HttpParams {

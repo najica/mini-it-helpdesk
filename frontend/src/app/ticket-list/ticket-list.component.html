@@ -1,6 +1,9 @@
 <div class="ticket-list-container">
   <div class="header-section">
     <h2>Lista tiketa</h2>
+    <button type="button" class="btn-create" (click)="openCreateModal()" aria-label="Novi tiket">
+      <span class="btn-create-icon">+</span> Novi tiket
+    </button>
   </div>
 
   <div class="filters-section">
@@ -95,5 +98,7 @@
       </tbody>
     </table>
   </div>
+
+  <app-create-ticket-form *ngIf="showCreateModal" (close)="closeCreateModal()" (created)="search()"></app-create-ticket-form>
 </div>
 
