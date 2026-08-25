@@ -97,10 +97,13 @@
           <td class="col-narrow">
             {{ ticket.assignedToUserId ?? 'N/A' }}
           </td>
-          <td>
-            <a [routerLink]="['/tickets', ticket.id]" class="btn-details">
-              Detalji
+          <td class="col-actions">
+            <a [routerLink]="['/tickets', ticket.id]" class="btn-icon btn-details" title="Detalji" aria-label="Detalji">
+              <span class="material-icons">visibility</span>
             </a>
+            <button type="button" class="btn-icon btn-assign" title="Dodeli agentu" aria-label="Dodeli agentu" (click)="openAssignModal(ticket)">
+              <span class="material-icons">assignment_add</span>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -108,5 +111,13 @@
   </div>
 
   <app-create-ticket-form *ngIf="showCreateModal" (close)="closeCreateModal()" (created)="search()"></app-create-ticket-form>
+
+  <app-assign-ticket-form
+    *ngIf="assignTicketId !== null"
+    [ticketId]="assignTicketId"
+    [assignedToUserId]="assignTicketAssignedToUserId"
+    (close)="closeAssignModal()"
+    (assigned)="search()">
+  </app-assign-ticket-form>
 </div>
 
