@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Ticket, TicketSearchFilters, TicketService } from '../services/ticket.service';
+// DODATO: Import za tvoju novu formu
+import { CreateTicketFormComponent } from '../create-ticket-form/create-ticket-form.component';
 
 @Component({
   selector: 'app-ticket-list',
@@ -14,7 +16,9 @@ import { Ticket, TicketSearchFilters, TicketService } from '../services/ticket.s
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    // DODATO: Komponenta registrovana ovde
+    CreateTicketFormComponent
   ]
 })
 export class TicketListComponent implements OnInit {
@@ -33,7 +37,7 @@ export class TicketListComponent implements OnInit {
 
   showCreateModal = false;
 
-  constructor(private ticketService: TicketService) {}
+  constructor(private ticketService: TicketService) { }
 
   ngOnInit(): void {
     this.search();

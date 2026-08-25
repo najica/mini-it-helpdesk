@@ -9,7 +9,8 @@ import { TicketService } from '../services/ticket.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './ticket-form.component.html',
-  styleUrls: ['./ticket-form.component.css'] // promeni u .scss ako koristiš Sass
+  // Napomena: Ako koristiš SCSS, promeni u './ticket-form.component.scss'
+  styleUrl: './ticket-form.component.scss'
 })
 export class TicketFormComponent implements OnInit {
   ticketForm: FormGroup;
@@ -28,7 +29,6 @@ export class TicketFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    // Definisanje forme sa validacijom
     this.ticketForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -39,7 +39,6 @@ export class TicketFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Provera da li smo u edit modu (da li u URL-u postoji ID)
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.isEditMode = true;
@@ -50,10 +49,9 @@ export class TicketFormComponent implements OnInit {
 
   loadTicketData(id: number): void {
     this.loading = true;
-    // Napomena: Prilagodi metodu 'getById' onako kako se zove u tvom TicketService-u
+
     this.ticketService.getById(id).subscribe({
       next: (ticket) => {
-        // Prepisivanje postojećih podataka u formu
         this.ticketForm.patchValue({
           title: ticket.title,
           description: ticket.description,
@@ -72,7 +70,6 @@ export class TicketFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.ticketForm.invalid) {
-      // Ako forma nije validna, obeleži sva polja kao "touched" da bi se prikazale greške
       this.ticketForm.markAllAsTouched();
       return;
     }
@@ -83,12 +80,12 @@ export class TicketFormComponent implements OnInit {
 
     if (this.isEditMode && this.ticketId) {
       this.ticketService.update(this.ticketId, formData).subscribe({
-        next: () => this.router.navigate(['/tickets', this.ticketId]), // Vrati korisnika na detalje
+        next: () => this.router.navigate(['/tickets', this.ticketId]),
         error: (err) => this.handleError(err)
       });
     } else {
       this.ticketService.create(formData).subscribe({
-        next: (newTicket) => this.router.navigate(['/tickets']), // Vrati na listu tiketa
+        next: () => this.router.navigate(['/tickets']),
         error: (err) => this.handleError(err)
       });
     }
