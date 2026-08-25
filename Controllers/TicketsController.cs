@@ -49,6 +49,22 @@ namespace MiniItHelpdesk.Controllers
             return Ok(comments);
         }
 
+        [HttpPost("{ticketId}/comments")]
+        public async Task<IActionResult> CreateComment(int ticketId, [FromBody] CreateCommentDto dto)
+        {
+            var ticket = await _ticketService.GetByIdAsync(ticketId);
+            if (ticket is null)
+                return NotFound();
+
+            dto.TicketId = ticketId;
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var created = await _commentService.CreateAsync(dto);
+            return StatusCode(201, created);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateTicket([FromBody] CreateTicketDto dto)
         {

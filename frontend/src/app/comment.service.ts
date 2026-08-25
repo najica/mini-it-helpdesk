@@ -11,6 +11,11 @@ export interface Comment {
   createdAt: string | Date;
 }
 
+export interface CreateCommentDto {
+  text: string;
+  userId: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,5 +26,13 @@ export class CommentService {
 
   getByTicketId(ticketId: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.apiUrl}/${ticketId}/comments`);
+  }
+
+  create(ticketId: number, dto: CreateCommentDto): Observable<Comment> {
+    return this.http.post<Comment>(`${this.apiUrl}/${ticketId}/comments`, {
+      ticketId,
+      text: dto.text,
+      userId: dto.userId
+    });
   }
 }
