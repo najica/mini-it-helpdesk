@@ -10,8 +10,8 @@ public class CreateTicketDto
     [Required, StringLength(2000, MinimumLength = 3)]
     public string Description { get; set; } = string.Empty;
 
-    [Required, EnumDataType(typeof(TicketPriority))]
-    public TicketPriority Priority { get; set; }
+    [EnumDataType(typeof(TicketPriority))]
+    public TicketPriority? Priority { get; set; }
 
     [Required, EnumDataType(typeof(TicketCategory))]
     public TicketCategory TicketCategory { get; set; }
