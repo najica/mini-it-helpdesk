@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MiniItHelpdesk.Enums;
 using MiniItHelpdesk.DTOs;
+using MiniItHelpdesk.Services;
 
 namespace MiniItHelpdesk.Controllers
 {
@@ -9,10 +10,12 @@ namespace MiniItHelpdesk.Controllers
     public class TicketsController : ControllerBase
     {
         private readonly ITicketService _ticketService;
+        private readonly ICommentService _commentService;
 
-        public TicketsController(ITicketService ticketService)
+        public TicketsController(ITicketService ticketService, ICommentService commentService)
         {
             _ticketService = ticketService;
+            _commentService = commentService;
         }
 
         [HttpGet]
@@ -33,6 +36,17 @@ namespace MiniItHelpdesk.Controllers
                 return NotFound();
 
             return Ok(ticket);
+        }
+
+        [HttpGet("{ticketId}/comments")]
+        public async Task<ActionResult<List<CommentDto>>> GetComments(int ticketId)
+        {
+            var ticket = await _ticketService.GetByIdAsync(ticketId);
+            if (ticket is null)
+                return NotFound();
+
+            var comments = await _commentService.GetByTicketIdAsync(ticketId);
+            return Ok(comments);
         }
 
         [HttpPost]
