@@ -1,4 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+// 1. DODATI IMPORT ZA MODULE:
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { CreateTicketDto } from '../dtos/create-ticket.dto';
 import { TicketCategory, TicketPriority } from '../models/ticket.model';
 import { TicketService } from '../services/ticket.service';
@@ -14,8 +18,11 @@ interface CreateTicketForm {
 @Component({
   selector: 'app-create-ticket-form',
   templateUrl: './create-ticket-form.component.html',
-  standalone: false,
-  styleUrl: './create-ticket-form.component.scss'
+  // 2. PROMENJENO U TRUE:
+  standalone: true,
+  styleUrl: './create-ticket-form.component.scss',
+  // 3. DODAT IMPORTS NIZ ZA NGMODEL I NGIF/NGFOR:
+  imports: [CommonModule, FormsModule]
 })
 export class CreateTicketFormComponent {
   @Output() close = new EventEmitter<void>();
@@ -28,7 +35,7 @@ export class CreateTicketFormComponent {
   submitting = false;
   errorMessage = '';
 
-  constructor(private ticketService: TicketService) {}
+  constructor(private ticketService: TicketService) { }
 
   onCancel(): void {
     this.close.emit();

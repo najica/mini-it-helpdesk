@@ -13,10 +13,8 @@ import { CreateTicketFormComponent } from './create-ticket-form/create-ticket-fo
 @NgModule({
   declarations: [
     AppComponent,
-    TicketListComponent,
     TicketDetailComponent,
     UserListComponent,
-    CreateTicketFormComponent
   ],
   imports: [
     BrowserModule,
