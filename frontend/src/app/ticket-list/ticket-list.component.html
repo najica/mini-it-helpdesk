@@ -62,6 +62,8 @@
           <th>Prioritet</th>
           <th>Kategorija</th>
           <th>Datum kreiranja</th>
+          <th class="col-narrow">Kreirao</th>
+          <th class="col-narrow">Dodeljeno</th>
           <th>Akcije</th>
         </tr>
       </thead>
@@ -85,6 +87,12 @@
           </td>
           <td>
             {{ ticket.createdAt | date:'dd.MM.yyyy. HH:mm' }}
+          </td>
+          <td class="col-narrow">
+            {{ ticket.createdByUserId ?? 'N/A' }}
+          </td>
+          <td class="col-narrow">
+            {{ ticket.assignedToUserId ?? 'N/A' }}
           </td>
           <td>
             <a [routerLink]="['/tickets', ticket.id]" class="btn-details">

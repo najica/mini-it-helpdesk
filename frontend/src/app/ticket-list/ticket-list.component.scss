@@ -112,6 +112,11 @@
         letter-spacing: 0.05em;
         color: #475569;
       }
+
+      th.col-narrow {
+        width: 1%;
+        white-space: nowrap;
+      }
     }
 
     tbody {
@@ -132,6 +137,12 @@
           font-size: 0.9375rem;
           color: #334155;
           vertical-align: middle;
+        }
+
+        td.col-narrow {
+          width: 1%;
+          white-space: nowrap;
+          text-align: center;
         }
       }
     }
