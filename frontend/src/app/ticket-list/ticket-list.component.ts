@@ -21,10 +21,20 @@ export class TicketListComponent implements OnInit {
   filterCategory: string | null = null;
   filterUser: number | null = null;
 
+  showCreateModal = false;
+
   constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
     this.search();
+  }
+
+  openCreateModal(): void {
+    this.showCreateModal = true;
+  }
+
+  closeCreateModal(): void {
+    this.showCreateModal = false;
   }
 
   search(): void {
