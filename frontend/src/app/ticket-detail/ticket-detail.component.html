@@ -36,6 +36,14 @@
         <span>{{ ticket.category }}</span>
       </div>
       <div class="detail-item">
+        <label>Prijavio:</label>
+        <span>Korisnik #{{ ticket.createdByUserId }}</span>
+      </div>
+      <div class="detail-item">
+        <label>Dodeljeno:</label>
+        <span>{{ ticket.assignedToUserId ? 'Korisnik #' + ticket.assignedToUserId : 'Nije dodeljeno' }}</span>
+      </div>
+      <div class="detail-item">
         <label>Datum kreiranja:</label>
         <span>{{ ticket.createdAt | date:'dd.MM.yyyy. HH:mm' }}</span>
       </div>
@@ -70,6 +78,37 @@
           <p class="comment-text">{{ comment.text }}</p>
         </li>
       </ul>
+
+      <form class="comment-form" (ngSubmit)="submitComment()">
+        <h5>Dodaj komentar</h5>
+
+        <div class="form-group">
+          <label for="commentUser">Korisnik:</label>
+          <select id="commentUser" name="commentUser" [(ngModel)]="newCommentUserId">
+            <option [ngValue]="null" disabled>Izaberite korisnika</option>
+            <option *ngFor="let user of users" [ngValue]="user.id">{{ user.name }} (#{{ user.id }})</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="commentText">Komentar:</label>
+          <textarea
+            id="commentText"
+            name="commentText"
+            rows="3"
+            placeholder="Unesite tekst komentara..."
+            [(ngModel)]="newCommentText"
+          ></textarea>
+        </div>
+
+        <div *ngIf="newCommentErrorMessage" class="form-error">
+          <p>{{ newCommentErrorMessage }}</p>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="submittingComment">
+          {{ submittingComment ? 'Slanje...' : 'Pošalji komentar' }}
+        </button>
+      </form>
     </div>
   </div>
 </div>
