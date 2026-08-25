@@ -15,9 +15,14 @@
   <div *ngIf="!loading && !errorMessage && ticket" class="detail-card">
     <div class="detail-header">
       <h3>{{ ticket.title }}</h3>
-      <span class="badge badge-status" [ngClass]="'status-' + (ticket.status ? ticket.status.toLowerCase() : '')">
-        {{ ticket.status }}
-      </span>
+
+      <!-- IZMENJENO: Dodat kontejner za status i dugme -->
+      <div class="header-actions">
+        <span class="badge badge-status" [ngClass]="'status-' + (ticket.status ? ticket.status.toLowerCase() : '')">
+          {{ ticket.status }}
+        </span>
+        <button type="button" class="btn-edit" (click)="openEditModal()">✎ Izmeni</button>
+      </div>
     </div>
 
     <div class="detail-grid">
@@ -113,3 +118,9 @@
   </div>
 </div>
 
+<!-- OVO JE DODATO NA DNO: Naša modal forma -->
+<app-create-ticket-form *ngIf="showEditModal"
+                        [editTicket]="ticket"
+                        (close)="closeEditModal()"
+                        (updated)="onTicketUpdated()">
+</app-create-ticket-form>

@@ -22,6 +22,7 @@ export class TicketDetailComponent implements OnInit {
   commentsLoading = false;
   commentsErrorMessage = '';
 
+  showEditModal = false;
   users: User[] = [];
 
   newCommentText = '';
@@ -134,3 +135,17 @@ export class TicketDetailComponent implements OnInit {
   }
 }
 
+  openEditModal(): void {
+    this.showEditModal = true;
+  }
+
+  closeEditModal(): void {
+    this.showEditModal = false;
+  }
+
+  onTicketUpdated(): void {
+    if (this.ticket) {
+      this.loadTicket(this.ticket.id);
+    }
+  }
+}

@@ -1,7 +1,8 @@
 <div class="modal-backdrop" (click)="onCancel()">
   <div class="modal-card" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h3>Novi tiket</h3>
+      <!-- DINAMIČKI NASLOV -->
+      <h3>{{ isEditMode ? 'Izmena tiketa' : 'Novi tiket' }}</h3>
       <button type="button" class="btn-close" (click)="onCancel()" aria-label="Zatvori">&times;</button>
     </div>
 
@@ -12,28 +13,26 @@
 
       <div class="form-field">
         <label for="ticket-title">Naslov</label>
-        <input
-          id="ticket-title"
-          name="title"
-          type="text"
-          [(ngModel)]="form.title"
-          required
-          minlength="3"
-          maxlength="150"
-          placeholder="Kratak opis problema" />
+        <input id="ticket-title"
+               name="title"
+               type="text"
+               [(ngModel)]="form.title"
+               required
+               minlength="3"
+               maxlength="150"
+               placeholder="Kratak opis problema" />
       </div>
 
       <div class="form-field">
         <label for="ticket-description">Opis</label>
-        <textarea
-          id="ticket-description"
-          name="description"
-          rows="4"
-          [(ngModel)]="form.description"
-          required
-          minlength="3"
-          maxlength="2000"
-          placeholder="Detaljan opis problema"></textarea>
+        <textarea id="ticket-description"
+                  name="description"
+                  rows="4"
+                  [(ngModel)]="form.description"
+                  required
+                  minlength="3"
+                  maxlength="2000"
+                  placeholder="Detaljan opis problema"></textarea>
       </div>
 
       <div class="form-row">
@@ -56,20 +55,20 @@
 
       <div class="form-field">
         <label for="ticket-created-by">ID korisnika koji prijavljuje</label>
-        <input
-          id="ticket-created-by"
-          name="createdByUserId"
-          type="number"
-          min="1"
-          [(ngModel)]="form.createdByUserId"
-          required
-          placeholder="Npr. 1" />
+        <input id="ticket-created-by"
+               name="createdByUserId"
+               type="number"
+               min="1"
+               [(ngModel)]="form.createdByUserId"
+               required
+               placeholder="Npr. 1" />
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="submitting">Otkaži</button>
         <button type="submit" class="btn-primary" [disabled]="ticketForm.invalid || submitting">
-          {{ submitting ? 'Kreiranje...' : 'Kreiraj tiket' }}
+          <!-- DINAMIČKO DUGME -->
+          {{ submitting ? 'Čuvanje...' : (isEditMode ? 'Sačuvaj izmene' : 'Kreiraj tiket') }}
         </button>
       </div>
     </form>
