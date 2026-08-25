@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MiniItHelpdesk.Data;
 using MiniItHelpdesk.DTOs;
+using MiniItHelpdesk.Models;
 
 namespace MiniItHelpdesk.Services
 {
@@ -14,6 +15,21 @@ namespace MiniItHelpdesk.Services
         {
             var users = await _context.Users.ToListAsync();
             return users.Select(u => new UserDto
+            {
+                Id = u.Id,
+                Name = u.Name,
+                Email = u.Email,
+                Role = u.Role
+            }).ToList();
+        }
+
+        public async Task<List<UserDto>> GetAgentsAsync()
+        {
+            var agents = await _context.Users
+                .Where(u => u.Role == User.UserRole.ITAgent)
+                .ToListAsync();
+
+            return agents.Select(u => new UserDto
             {
                 Id = u.Id,
                 Name = u.Name,

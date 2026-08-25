@@ -18,5 +18,12 @@ namespace MiniItHelpdesk.Controllers
             var users = await _userService.GetAllAsync();
             return Ok(users);
         }
+
+        [HttpGet("agents")]
+        public async Task<ActionResult<List<UserDto>>> GetAgents()
+        {
+            var agents = await _userService.GetAgentsAsync();
+            return Ok(agents);
+        }
     }
 }
