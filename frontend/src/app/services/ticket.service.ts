@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { CreateTicketDto } from '../dtos/create-ticket.dto';
 import { Ticket } from '../models/ticket.model';
 
 export type { Ticket };
@@ -32,7 +33,7 @@ export class TicketService {
     return this.http.get<Ticket>(`${this.baseUrl}/${id}`);
   }
 
-  create(dto: Partial<Ticket>): Observable<Ticket> {
+  create(dto: CreateTicketDto): Observable<Ticket> {
     return this.http.post<Ticket>(this.baseUrl, dto);
   }
 

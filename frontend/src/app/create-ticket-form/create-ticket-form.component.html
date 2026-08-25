@@ -6,6 +6,10 @@
     </div>
 
     <form #ticketForm="ngForm" (ngSubmit)="ticketForm.valid && onSubmit()" class="modal-body">
+      <div *ngIf="errorMessage" class="form-error">
+        <p>{{ errorMessage }}</p>
+      </div>
+
       <div class="form-field">
         <label for="ticket-title">Naslov</label>
         <input
@@ -63,8 +67,10 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn-secondary" (click)="onCancel()">Otkaži</button>
-        <button type="submit" class="btn-primary" [disabled]="ticketForm.invalid">Kreiraj tiket</button>
+        <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="submitting">Otkaži</button>
+        <button type="submit" class="btn-primary" [disabled]="ticketForm.invalid || submitting">
+          {{ submitting ? 'Kreiranje...' : 'Kreiraj tiket' }}
+        </button>
       </div>
     </form>
   </div>

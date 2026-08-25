@@ -99,6 +99,6 @@
     </table>
   </div>
 
-  <app-create-ticket-form *ngIf="showCreateModal" (close)="closeCreateModal()"></app-create-ticket-form>
+  <app-create-ticket-form *ngIf="showCreateModal" (close)="closeCreateModal()" (created)="search()"></app-create-ticket-form>
 </div>
 
