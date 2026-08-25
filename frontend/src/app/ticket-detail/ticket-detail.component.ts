@@ -19,11 +19,13 @@ export class TicketDetailComponent implements OnInit {
   commentsLoading = false;
   commentsErrorMessage = '';
 
+  showEditModal = false;
+
   constructor(
     private route: ActivatedRoute,
     private ticketService: TicketService,
     private commentService: CommentService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -68,5 +70,18 @@ export class TicketDetailComponent implements OnInit {
       }
     });
   }
-}
 
+  openEditModal(): void {
+    this.showEditModal = true;
+  }
+
+  closeEditModal(): void {
+    this.showEditModal = false;
+  }
+
+  onTicketUpdated(): void {
+    if (this.ticket) {
+      this.loadTicket(this.ticket.id);
+    }
+  }
+}

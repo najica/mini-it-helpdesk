@@ -8,19 +8,24 @@ import { AppComponent } from './app.component';
 import { TicketListComponent } from './ticket-list/ticket-list.component';
 import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
+
+// 1. OBAVEZNO IMPORTUJ FORMU OVDE:
 import { CreateTicketFormComponent } from './create-ticket-form/create-ticket-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TicketDetailComponent,
-    UserListComponent,
+    UserListComponent
+    // Uveri se da CreateTicketFormComponent NIJE ovde u declarations!
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    TicketListComponent    // TicketListComponent added here
+    TicketListComponent,
+    // 2. DODAJ FORMU OVDE U IMPORTS NIZ:
+    CreateTicketFormComponent
   ],
   providers: [
     provideHttpClient()
