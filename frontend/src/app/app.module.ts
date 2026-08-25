@@ -12,14 +12,14 @@ import { UserListComponent } from './user-list/user-list.component';
 @NgModule({
   declarations: [
     AppComponent,
-    TicketListComponent,
-    TicketDetailComponent,
+    TicketDetailComponent, // TicketListComponent removed from here
     UserListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TicketListComponent    // TicketListComponent added here
   ],
   providers: [
     provideHttpClient()

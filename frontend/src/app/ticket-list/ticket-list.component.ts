@@ -1,11 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+// Add these imports at the top
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { Ticket, TicketSearchFilters, TicketService } from '../services/ticket.service';
 
 @Component({
   selector: 'app-ticket-list',
   templateUrl: './ticket-list.component.html',
-  standalone: false,
-  styleUrl: './ticket-list.component.scss'
+  standalone: true,
+  styleUrl: './ticket-list.component.scss',
+  // ADD THIS IMPORTS ARRAY:
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule
+  ]
 })
 export class TicketListComponent implements OnInit {
   tickets: Ticket[] = [];
@@ -21,7 +31,7 @@ export class TicketListComponent implements OnInit {
   filterCategory: string | null = null;
   filterUser: number | null = null;
 
-  constructor(private ticketService: TicketService) {}
+  constructor(private ticketService: TicketService) { }
 
   ngOnInit(): void {
     this.search();
