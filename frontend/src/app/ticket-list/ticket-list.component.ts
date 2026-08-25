@@ -1,11 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+// Add these imports at the top
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { Ticket, TicketSearchFilters, TicketService } from '../services/ticket.service';
+// DODATO: Import za tvoju novu formu
+import { CreateTicketFormComponent } from '../create-ticket-form/create-ticket-form.component';
 
 @Component({
   selector: 'app-ticket-list',
   templateUrl: './ticket-list.component.html',
-  standalone: false,
-  styleUrl: './ticket-list.component.scss'
+  standalone: true,
+  styleUrl: './ticket-list.component.scss',
+  // ADD THIS IMPORTS ARRAY:
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    // DODATO: Komponenta registrovana ovde
+    CreateTicketFormComponent
+  ]
 })
 export class TicketListComponent implements OnInit {
   tickets: Ticket[] = [];
@@ -21,10 +35,20 @@ export class TicketListComponent implements OnInit {
   filterCategory: string | null = null;
   filterUser: number | null = null;
 
-  constructor(private ticketService: TicketService) {}
+  showCreateModal = false;
+
+  constructor(private ticketService: TicketService) { }
 
   ngOnInit(): void {
     this.search();
+  }
+
+  openCreateModal(): void {
+    this.showCreateModal = true;
+  }
+
+  closeCreateModal(): void {
+    this.showCreateModal = false;
   }
 
   search(): void {

@@ -58,7 +58,7 @@ namespace MiniItHelpdesk
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseStaticFiles();
             app.UseCors(FrontendCorsPolicy);
 
             if (!app.Environment.IsDevelopment())
