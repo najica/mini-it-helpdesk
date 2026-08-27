@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
@@ -16,6 +16,7 @@ describe('TicketDetailComponent', () => {
   let mockTicketService: jasmine.SpyObj<TicketService>;
   let mockCommentService: jasmine.SpyObj<CommentService>;
   let mockUserService: jasmine.SpyObj<UserService>;
+  let router: Router;
 
   const mockTicket: Ticket = {
     id: 1,
@@ -52,7 +53,7 @@ describe('TicketDetailComponent', () => {
   ];
 
   beforeEach(async () => {
-    mockTicketService = jasmine.createSpyObj('TicketService', ['getById']);
+    mockTicketService = jasmine.createSpyObj('TicketService', ['getById', 'delete']);
     mockCommentService = jasmine.createSpyObj('CommentService', ['getByTicketId', 'create']);
     mockUserService = jasmine.createSpyObj('UserService', ['getAll']);
 
@@ -82,6 +83,8 @@ describe('TicketDetailComponent', () => {
     component = fixture.componentInstance;
     mockCommentService.getByTicketId.and.returnValue(of([]));
     mockUserService.getAll.and.returnValue(of(mockUsers));
+    router = TestBed.inject(Router);
+    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true));
   });
 
   it('should create the component', () => {
@@ -240,5 +243,71 @@ describe('TicketDetailComponent', () => {
     expect(component.newCommentErrorMessage).toBe('Neispravan unos. Proverite polja i pokušajte ponovo.');
     expect(component.submittingComment).toBeFalse();
   });
-});
 
+  describe('brisanje tiketa', () => {
+    beforeEach(() => {
+      mockTicketService.getById.and.returnValue(of(mockTicket));
+      fixture.detectChanges();
+    });
+
+    it('should render the delete button', () => {
+      const compiled = fixture.nativeElement as HTMLElement;
+      const deleteButton = compiled.querySelector('.btn-delete');
+      expect(deleteButton).toBeTruthy();
+      expect(deleteButton?.textContent).toContain('Obriši');
+    });
+
+    it('should not call the service when the confirmation is cancelled', () => {
+      spyOn(window, 'confirm').and.returnValue(false);
+
+      component.deleteTicket();
+
+      expect(window.confirm).toHaveBeenCalled();
+      expect(mockTicketService.delete).not.toHaveBeenCalled();
+      expect(component.deleting).toBeFalse();
+      expect(router.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should delete the ticket and navigate back to the list on confirmation', () => {
+      spyOn(window, 'confirm').and.returnValue(true);
+      mockTicketService.delete.and.returnValue(of(void 0));
+
+      component.deleteTicket();
+
+      expect(mockTicketService.delete).toHaveBeenCalledWith(1);
+      expect(router.navigate).toHaveBeenCalledWith(['/tickets']);
+      expect(component.deleting).toBeFalse();
+      expect(component.deleteErrorMessage).toBe('');
+    });
+
+    it('should show a readable message when the backend returns 404', () => {
+      spyOn(window, 'confirm').and.returnValue(true);
+      mockTicketService.delete.and.returnValue(
+        throwError(() => new HttpErrorResponse({ status: 404 }))
+      );
+
+      component.deleteTicket();
+      fixture.detectChanges();
+
+      expect(component.deleteErrorMessage).toBe('Tiket više ne postoji - verovatno je već obrisan.');
+      expect(component.deleting).toBeFalse();
+      expect(router.navigate).not.toHaveBeenCalled();
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.textContent).toContain('Tiket više ne postoji - verovatno je već obrisan.');
+    });
+
+    it('should show a generic message for other backend errors', () => {
+      spyOn(window, 'confirm').and.returnValue(true);
+      mockTicketService.delete.and.returnValue(
+        throwError(() => new HttpErrorResponse({ status: 500 }))
+      );
+
+      component.deleteTicket();
+
+      expect(component.deleteErrorMessage).toBe('Greška pri brisanju tiketa. Pokušajte ponovo.');
+      expect(component.deleting).toBeFalse();
+      expect(router.navigate).not.toHaveBeenCalled();
+    });
+  });
+});
