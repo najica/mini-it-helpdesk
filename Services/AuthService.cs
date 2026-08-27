@@ -26,10 +26,8 @@ namespace MiniItHelpdesk.Services
             if (user is null)
                 return null;
 
-            var verificationResult = _passwordHasher.VerifyHashedPassword(
-                user, user.PasswordHash, dto.Password);
-
-            if (verificationResult == PasswordVerificationResult.Failed)
+            var isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
+            if (!isPasswordValid)
                 return null;
 
             var expiresAt = DateTime.UtcNow.AddMinutes(
