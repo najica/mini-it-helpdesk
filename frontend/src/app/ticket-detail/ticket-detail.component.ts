@@ -36,9 +36,12 @@ export class TicketDetailComponent implements OnInit {
   selectedStatus: TicketStatus | null = null;
   changingStatus = false;
   statusErrorMessage = '';
+  deleting = false;
+  deleteErrorMessage = '';
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private ticketService: TicketService,
     private commentService: CommentService,
     private userService: UserService
@@ -149,6 +152,39 @@ export class TicketDetailComponent implements OnInit {
 
   closeEditModal(): void {
     this.showEditModal = false;
+  }
+
+  deleteTicket(): void {
+    if (!this.ticket || this.deleting) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Da li ste sigurni da želite da obrišete tiket #${this.ticket.id} - "${this.ticket.title}"? Ova akcija je nepovratna.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    const ticketId = this.ticket.id;
+    this.deleting = true;
+    this.deleteErrorMessage = '';
+
+    this.ticketService.delete(ticketId).subscribe({
+      next: () => {
+        this.deleting = false;
+        this.router.navigate(['/tickets']);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.deleting = false;
+        if (err.status === 404) {
+          this.deleteErrorMessage = 'Tiket više ne postoji - verovatno je već obrisan.';
+        } else {
+          this.deleteErrorMessage = 'Greška pri brisanju tiketa. Pokušajte ponovo.';
+        }
+      }
+    });
   }
 
   onTicketUpdated(): void {

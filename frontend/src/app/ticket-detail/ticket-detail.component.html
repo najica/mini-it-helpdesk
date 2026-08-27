@@ -34,7 +34,14 @@
           {{ ticket.status }}
         </span>
         <button type="button" class="btn-edit" (click)="openEditModal()">✎ Izmeni</button>
+        <button type="button" class="btn-delete" (click)="deleteTicket()" [disabled]="deleting">
+          {{ deleting ? 'Brisanje...' : '🗑 Obriši' }}
+        </button>
       </div>
+    </div>
+
+    <div *ngIf="deleteErrorMessage" class="delete-error">
+      <p>{{ deleteErrorMessage }}</p>
     </div>
 
     <div class="detail-grid">
