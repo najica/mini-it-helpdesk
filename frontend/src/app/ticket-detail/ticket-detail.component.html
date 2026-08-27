@@ -12,9 +12,22 @@
     <p>{{ errorMessage }}</p>
   </div>
 
+
   <div *ngIf="!loading && !errorMessage && ticket" class="detail-card">
     <div class="detail-header">
       <h3>{{ ticket.title }}</h3>
+
+      <div class="status-change" *ngIf="ticket">
+        <label for="statusSelect">Status:</label>
+        <button *ngFor="let s of statusOptions"
+                [disabled]="changingStatus || ticket.status === s || ticket.status === 'Closed'"
+                (click)="onStatusSelected(s)">
+          {{ s }}
+        </button>
+
+        <span *ngIf="changingStatus">Ažuriranje statusa...</span>
+        <p class="error-message" *ngIf="statusErrorMessage">{{ statusErrorMessage }}</p>
+      </div>
 
       <div class="header-actions">
         <span class="badge badge-status" [ngClass]="'status-' + (ticket.status ? ticket.status.toLowerCase() : '')">
@@ -103,13 +116,11 @@
 
         <div class="form-group">
           <label for="commentText">Komentar:</label>
-          <textarea
-            id="commentText"
-            name="commentText"
-            rows="3"
-            placeholder="Unesite tekst komentara..."
-            [(ngModel)]="newCommentText"
-          ></textarea>
+          <textarea id="commentText"
+                    name="commentText"
+                    rows="3"
+                    placeholder="Unesite tekst komentara..."
+                    [(ngModel)]="newCommentText"></textarea>
         </div>
 
         <div *ngIf="newCommentErrorMessage" class="form-error">
