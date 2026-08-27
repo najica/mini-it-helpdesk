@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'users', component: UserListComponent },
   { path: '', redirectTo: '/tickets', pathMatch: 'full' },
 { path: 'tickets/new', component: TicketFormComponent },
-  { path: 'tickets/edit/:id', component: TicketFormComponent } // :id je ključno za edit mod!
+  { path: 'tickets/edit/:id', component: TicketFormComponent } 
 ];
 
 @NgModule({

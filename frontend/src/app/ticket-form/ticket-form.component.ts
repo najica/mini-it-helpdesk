@@ -9,7 +9,6 @@ import { TicketService } from '../services/ticket.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './ticket-form.component.html',
-  // Napomena: Ako koristiš SCSS, promeni u './ticket-form.component.scss'
   styleUrl: './ticket-form.component.scss'
 })
 export class TicketFormComponent implements OnInit {

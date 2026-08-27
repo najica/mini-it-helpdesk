@@ -25,15 +25,12 @@ namespace MiniItHelpdesk
                 });
             });
 
-            // Add services to the container.
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
-                    // Serialize enums as strings instead of numbers
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
             builder.Services.AddScoped<ITicketService, TicketService>();
@@ -51,8 +48,7 @@ namespace MiniItHelpdesk
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            // Configure the HTTP request pipeline.
-            //  if (app.Environment.IsDevelopment())
+           
             {
                 app.MapOpenApi();
                 app.UseSwagger();

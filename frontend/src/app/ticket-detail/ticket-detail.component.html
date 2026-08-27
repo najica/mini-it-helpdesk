@@ -16,7 +16,6 @@
     <div class="detail-header">
       <h3>{{ ticket.title }}</h3>
 
-      <!-- IZMENJENO: Dodat kontejner za status i dugme -->
       <div class="header-actions">
         <span class="badge badge-status" [ngClass]="'status-' + (ticket.status ? ticket.status.toLowerCase() : '')">
           {{ ticket.status }}

@@ -4,10 +4,8 @@
 
 namespace MiniItHelpdesk.Migrations
 {
-    /// <inheritdoc />
     public partial class AddTicketUserRelations : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
@@ -50,7 +48,6 @@ namespace MiniItHelpdesk.Migrations
                 onDelete: ReferentialAction.Restrict);
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
