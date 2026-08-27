@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CreateTicketDto } from '../dtos/create-ticket.dto';
 import { Ticket } from '../models/ticket.model';
+import { ChangeStatusDto } from '../dtos/change-status.dto';
 
 export type { Ticket };
 
@@ -45,7 +46,7 @@ export class TicketService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  changeStatus(id: number, dto: Partial<Ticket>): Observable<Ticket> {
+  changeStatus(id: number, dto: ChangeStatusDto): Observable<Ticket> {
     return this.http.patch<Ticket>(`${this.baseUrl}/${id}/status`, dto);
   }
 

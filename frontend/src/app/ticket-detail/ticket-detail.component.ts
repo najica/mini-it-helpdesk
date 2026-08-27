@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Ticket } from '../models/ticket.model';
+import { Ticket, TicketStatus } from '../models/ticket.model';
 import { TicketService } from '../services/ticket.service';
 import { Comment, CommentService } from '../comment.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -31,6 +31,12 @@ export class TicketDetailComponent implements OnInit {
 
   showEditModal = false;
 
+  // --- Promena statusa ---
+  statusOptions: TicketStatus[] = ['Open', 'InProgress', 'Closed'];
+  selectedStatus: TicketStatus | null = null;
+  changingStatus = false;
+  statusErrorMessage = '';
+
   constructor(
     private route: ActivatedRoute,
     private ticketService: TicketService,
@@ -58,6 +64,7 @@ export class TicketDetailComponent implements OnInit {
     this.ticketService.getById(id).subscribe({
       next: (ticket) => {
         this.ticket = ticket;
+        this.selectedStatus = ticket.status;
         this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
@@ -135,6 +142,7 @@ export class TicketDetailComponent implements OnInit {
     });
   }
 
+  // VRAĆENE METODE ZA OTVARANJE MODALA I OSVEŽAVANJE:
   openEditModal(): void {
     this.showEditModal = true;
   }
@@ -147,5 +155,36 @@ export class TicketDetailComponent implements OnInit {
     if (this.ticket) {
       this.loadTicket(this.ticket.id);
     }
+  }
+
+  onStatusSelected(status: TicketStatus): void {
+    if (!this.ticket || this.changingStatus || status === this.ticket.status) {
+      return;
+    }
+
+    this.statusErrorMessage = '';
+    this.changingStatus = true;
+
+    const previousStatus = this.ticket.status;
+
+    this.ticketService.changeStatus(this.ticket.id, { newStatus: status }).subscribe({
+      next: (updatedTicket) => {
+        this.ticket = updatedTicket;
+        this.selectedStatus = updatedTicket.status;
+        this.changingStatus = false;
+      },
+      error: (err: HttpErrorResponse) => {
+        this.changingStatus = false;
+        this.selectedStatus = previousStatus;
+
+        if (err.status === 409) {
+          this.statusErrorMessage = 'Nije moguće promeniti status zatvorenog tiketa.';
+        } else if (err.status === 404) {
+          this.statusErrorMessage = 'Tiket nije pronađen.';
+        } else {
+          this.statusErrorMessage = 'Greška pri promeni statusa tiketa.';
+        }
+      }
+    });
   }
 }
