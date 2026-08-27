@@ -26,6 +26,10 @@ namespace MiniItHelpdesk.Data
             modelBuilder.Entity<User>().Property(u => u.Role)
                 .HasConversion<string>()
                 .HasColumnType("TEXT");
+            modelBuilder.Entity<User>()
+                .Property(u => u.PasswordHash)
+                .HasMaxLength(255)
+                .IsRequired();
             modelBuilder.Entity<Ticket>().HasKey(t => t.Id);
             modelBuilder.Entity<Ticket>().Property(t => t.Status)
                 .HasConversion<string>()
@@ -61,8 +65,8 @@ namespace MiniItHelpdesk.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "Employee", Email = "employee@test.com", Role = User.UserRole.Employee },
-                new User { Id = 2, Name = "Direct Manager", Email = "direct.manager@test.com", Role = User.UserRole.ITAgent }
+                new User { Id = 1, Name = "Employee", Email = "employee@test.com", Role = User.UserRole.Employee, PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS." },
+                new User { Id = 2, Name = "Direct Manager", Email = "direct.manager@test.com", Role = User.UserRole.ITAgent, PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS." }
             );
 
             modelBuilder.Entity<Ticket>().HasData(
