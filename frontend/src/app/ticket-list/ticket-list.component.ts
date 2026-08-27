@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-// Add these imports at the top
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Ticket, TicketSearchFilters, TicketService } from '../services/ticket.service';
-// DODATO: Import za tvoju novu formu
 import { CreateTicketFormComponent } from '../create-ticket-form/create-ticket-form.component';
 
 @Component({
@@ -12,12 +10,10 @@ import { CreateTicketFormComponent } from '../create-ticket-form/create-ticket-f
   templateUrl: './ticket-list.component.html',
   standalone: true,
   styleUrl: './ticket-list.component.scss',
-  // ADD THIS IMPORTS ARRAY:
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
-    // DODATO: Komponenta registrovana ovde
     CreateTicketFormComponent
   ]
 })
@@ -64,13 +60,46 @@ export class TicketListComponent implements OnInit {
 
     this.ticketService.search(filters).subscribe({
       next: (data) => {
-        this.tickets = data || [];
+        const fetchedTickets = data || [];
+        this.tickets = this.sortTickets(fetchedTickets);
         this.loading = false;
       },
       error: () => {
         this.errorMessage = 'Greška pri učitavanju tiketa.';
         this.loading = false;
       }
+    });
+  }
+
+  private sortTickets(tickets: Ticket[]): Ticket[] {
+    const statusWeight: { [key: string]: number } = {
+      'Open': 1,
+      'InProgress': 2,
+      'Resolved': 3,
+      'Closed': 4
+    };
+
+    const priorityWeight: { [key: string]: number } = {
+      'Critical': 1,
+      'High': 2,
+      'Medium': 3,
+      'Low': 4
+    };
+
+    return tickets.sort((a, b) => {
+      const statusA = a.status ? (statusWeight[a.status] || 99) : 99;
+      const statusB = b.status ? (statusWeight[b.status] || 99) : 99;
+      if (statusA !== statusB) {
+        return statusA - statusB;
+      }
+
+      const priorityA = a.priority ? (priorityWeight[a.priority] || 99) : 99;
+      const priorityB = b.priority ? (priorityWeight[b.priority] || 99) : 99;
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB;
+      }
+
+      return a.id - b.id;
     });
   }
 }

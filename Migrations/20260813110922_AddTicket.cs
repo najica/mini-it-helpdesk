@@ -4,10 +4,8 @@
 
 namespace MiniItHelpdesk.Migrations
 {
-    /// <inheritdoc />
     public partial class AddTicket : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -29,7 +27,6 @@ namespace MiniItHelpdesk.Migrations
                 });
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

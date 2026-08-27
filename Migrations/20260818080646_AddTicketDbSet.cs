@@ -1,13 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace MiniItHelpdesk.Migrations
 {
-    /// <inheritdoc />
     public partial class AddTicketDbSet : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
@@ -19,7 +16,6 @@ namespace MiniItHelpdesk.Migrations
                 oldType: "INTEGER");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(

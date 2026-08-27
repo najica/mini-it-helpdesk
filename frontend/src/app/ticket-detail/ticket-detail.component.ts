@@ -29,7 +29,6 @@ export class TicketDetailComponent implements OnInit {
   submittingComment = false;
   newCommentErrorMessage = '';
 
-  // VRAĆENA PROMENLJIVA ZA MODAL:
   showEditModal = false;
 
   constructor(
@@ -136,7 +135,6 @@ export class TicketDetailComponent implements OnInit {
     });
   }
 
-  // VRAĆENE METODE ZA OTVARANJE MODALA I OSVEŽAVANJE:
   openEditModal(): void {
     this.showEditModal = true;
   }

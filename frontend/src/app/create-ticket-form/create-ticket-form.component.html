@@ -1,7 +1,6 @@
 <div class="modal-backdrop" (click)="onCancel()">
   <div class="modal-card" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <!-- DINAMIČKI NASLOV -->
       <h3>{{ isEditMode ? 'Izmena tiketa' : 'Novi tiket' }}</h3>
       <button type="button" class="btn-close" (click)="onCancel()" aria-label="Zatvori">&times;</button>
     </div>
@@ -67,7 +66,6 @@
       <div class="modal-footer">
         <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="submitting">Otkaži</button>
         <button type="submit" class="btn-primary" [disabled]="ticketForm.invalid || submitting">
-          <!-- DINAMIČKO DUGME -->
           {{ submitting ? 'Čuvanje...' : (isEditMode ? 'Sačuvaj izmene' : 'Kreiraj tiket') }}
         </button>
       </div>

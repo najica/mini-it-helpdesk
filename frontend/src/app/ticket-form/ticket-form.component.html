@@ -1,7 +1,6 @@
 <div class="form-container">
   <h2>{{ isEditMode ? 'Izmena tiketa' : 'Novi tiket' }}</h2>
 
-  <!-- Prikaz grešaka sa backenda -->
   <div *ngIf="errorMessage" class="error-banner">
     {{ errorMessage }}
   </div>
@@ -16,7 +15,6 @@
       <label for="title">Naslov *</label>
       <input id="title" type="text" formControlName="title" [class.is-invalid]="ticketForm.get('title')?.invalid && ticketForm.get('title')?.touched" />
 
-      <!-- Frontend validaciona poruka -->
       <div class="error-text" *ngIf="ticketForm.get('title')?.invalid && ticketForm.get('title')?.touched">
         Polje Naslov je obavezno.
       </div>
@@ -26,7 +24,6 @@
       <label for="description">Opis *</label>
       <textarea id="description" rows="5" formControlName="description" [class.is-invalid]="ticketForm.get('description')?.invalid && ticketForm.get('description')?.touched"></textarea>
 
-      <!-- Frontend validaciona poruka -->
       <div class="error-text" *ngIf="ticketForm.get('description')?.invalid && ticketForm.get('description')?.touched">
         Polje Opis je obavezno.
       </div>
