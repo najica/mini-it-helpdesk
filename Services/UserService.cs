@@ -37,5 +37,11 @@ namespace MiniItHelpdesk.Services
                 Role = u.Role
             }).ToList();
         }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
 }

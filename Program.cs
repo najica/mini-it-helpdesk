@@ -43,6 +43,7 @@ namespace MiniItHelpdesk
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             var app = builder.Build();
 
