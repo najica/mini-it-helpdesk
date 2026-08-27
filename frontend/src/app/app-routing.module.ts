@@ -5,13 +5,20 @@ import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { TicketFormComponent } from './ticket-form/ticket-form.component';
 
+import { TicketEditGuard } from './guards/ticket-edit.guard';
+
 const routes: Routes = [
   { path: 'tickets', component: TicketListComponent },
   { path: 'tickets/:id', component: TicketDetailComponent },
   { path: 'users', component: UserListComponent },
   { path: '', redirectTo: '/tickets', pathMatch: 'full' },
-{ path: 'tickets/new', component: TicketFormComponent },
-  { path: 'tickets/edit/:id', component: TicketFormComponent } 
+  { path: 'tickets/new', component: TicketFormComponent },
+
+  {
+    path: 'tickets/edit/:id',
+    component: TicketFormComponent,
+    canActivate: [TicketEditGuard]
+  }
 ];
 
 @NgModule({
@@ -19,4 +26,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
