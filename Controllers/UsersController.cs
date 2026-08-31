@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using MiniItHelpdesk.DTOs;
 using MiniItHelpdesk.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MiniItHelpdesk.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
