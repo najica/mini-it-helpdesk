@@ -44,11 +44,13 @@ namespace MiniItHelpdesk
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+            builder.Services.AddProblemDetails();
+
             var app = builder.Build();
 
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseExceptionHandler();
 
-           
             {
                 app.MapOpenApi();
                 app.UseSwagger();
