@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using MiniItHelpdesk.Enums;
 using MiniItHelpdesk.DTOs;
 using MiniItHelpdesk.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MiniItHelpdesk.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class TicketsController : ControllerBase
     {
         private readonly ITicketService _ticketService;

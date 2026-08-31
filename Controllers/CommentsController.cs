@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniItHelpdesk.DTOs;
 using MiniItHelpdesk.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MiniItHelpdesk.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CommentsController : ControllerBase
     {
         private readonly ICommentService _commentService;

@@ -3,6 +3,9 @@ using MiniItHelpdesk.Data;
 using MiniItHelpdesk.Middleware;
 using MiniItHelpdesk.Services;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace MiniItHelpdesk
 {
@@ -48,6 +51,33 @@ namespace MiniItHelpdesk
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
 
+            var jwtSection = builder.Configuration.GetSection("Jwt");
+            var jwtIssuer = jwtSection["Issuer"]!;
+            var jwtAudience = jwtSection["Audience"]!;
+            var jwtKey = jwtSection["Key"]!;
+
+            builder.Services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtIssuer,
+
+                        ValidateAudience = true,
+                        ValidAudience = jwtAudience,
+
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            builder.Services.AddAuthorization();
+
             var app = builder.Build();
 
             app.UseExceptionHandler();
@@ -65,6 +95,7 @@ namespace MiniItHelpdesk
                 app.UseHttpsRedirection();
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
