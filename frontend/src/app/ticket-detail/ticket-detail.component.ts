@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Ticket, TicketStatus } from '../models/ticket.model';
 import { TicketService } from '../services/ticket.service';
 import { Comment, CommentService } from '../comment.service';
