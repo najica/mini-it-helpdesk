@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <EnableDefaultTypeScriptItems>false</EnableDefaultTypeScriptItems>
+    <UserSecretsId>5b96c864-6886-469f-980d-e9e73bcd711f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +29,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.22.0" />
 	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+	<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.22.0" />
   </ItemGroup>
 
   <ItemGroup>
