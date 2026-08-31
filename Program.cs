@@ -36,6 +36,7 @@ namespace MiniItHelpdesk
                 });
 
             builder.Services.AddOpenApi();
+            builder.Services.AddSwaggerGen();
 
             builder.Services.AddScoped<ITicketService, TicketService>();
             builder.Services.AddScoped<IUserService, UserService>();
