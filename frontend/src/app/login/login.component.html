@@ -1,0 +1,36 @@
+<div class="login-page">
+  <div class="login-card">
+    <h3>Prijava</h3>
+
+    <form #loginForm="ngForm" (ngSubmit)="loginForm.valid && onSubmit()" class="login-form">
+      <div class="form-field">
+        <label for="login-email">Email</label>
+        <input id="login-email"
+               name="email"
+               type="email"
+               [(ngModel)]="form.email"
+               required
+               email
+               placeholder="ime.prezime@firma.com" />
+      </div>
+
+      <div class="form-field">
+        <label for="login-password">Lozinka</label>
+        <input id="login-password"
+               name="password"
+               type="password"
+               [(ngModel)]="form.password"
+               required
+               placeholder="Lozinka" />
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loginForm.invalid || submitting">
+        {{ submitting ? 'Prijavljivanje...' : 'Prijavi se' }}
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="showErrorToast" class="toast-error">
+    Pogrešan email ili lozinka.
+  </div>
+</div>
