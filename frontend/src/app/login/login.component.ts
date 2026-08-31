@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,12 +17,18 @@ interface LoginForm {
   styleUrl: './login.component.scss',
   imports: [CommonModule, FormsModule]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   form: LoginForm = { email: '', password: '' };
   submitting = false;
   showErrorToast = false;
 
   constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/tickets']);
+    }
+  }
 
   onSubmit(): void {
     this.submitting = true;
