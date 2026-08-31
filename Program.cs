@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace MiniItHelpdesk
 {
@@ -45,7 +46,6 @@ namespace MiniItHelpdesk
                     builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
