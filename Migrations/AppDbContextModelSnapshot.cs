@@ -43,6 +43,224 @@ namespace MiniItHelpdesk.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2025, 1, 10, 10, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Checked the printer, seems to be a driver issue. Reinstalling now.",
+                            TicketId = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2025, 1, 11, 11, 45, 0, 0, DateTimeKind.Utc),
+                            Text = "Reset the password, please try logging in again.",
+                            TicketId = 2,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2025, 1, 11, 12, 30, 0, 0, DateTimeKind.Utc),
+                            Text = "Still getting the same error after the reset.",
+                            TicketId = 2,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2025, 1, 8, 9, 15, 0, 0, DateTimeKind.Utc),
+                            Text = "ISP confirmed an outage in the area, resolved now.",
+                            TicketId = 3,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2025, 1, 5, 16, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "License purchased and installed.",
+                            TicketId = 4,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2025, 1, 12, 9, 30, 0, 0, DateTimeKind.Utc),
+                            Text = "Tried a different cable, issue persists.",
+                            TicketId = 5,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2025, 1, 13, 11, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Investigating VPN server logs for drop causes.",
+                            TicketId = 6,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2025, 1, 13, 14, 10, 0, 0, DateTimeKind.Utc),
+                            Text = "Happens more often in the afternoon, for what it's worth.",
+                            TicketId = 6,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2025, 1, 14, 13, 20, 0, 0, DateTimeKind.Utc),
+                            Text = "Account unlocked, please try again.",
+                            TicketId = 7,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2025, 1, 15, 9, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Approval pending from IT budget owner.",
+                            TicketId = 8,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2025, 1, 16, 16, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Reconfigured mobile mail settings, sync restored.",
+                            TicketId = 9,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2025, 1, 16, 16, 45, 0, 0, DateTimeKind.Utc),
+                            Text = "Confirmed working on my phone now, thanks!",
+                            TicketId = 9,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(2025, 1, 17, 9, 20, 0, 0, DateTimeKind.Utc),
+                            Text = "Coffee spilled on the keyboard yesterday, keys W, A and S are unresponsive.",
+                            TicketId = 10,
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(2025, 1, 17, 10, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Replacement keyboard ordered, should arrive tomorrow.",
+                            TicketId = 10,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(2025, 1, 18, 11, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Checking the network share permissions after the update.",
+                            TicketId = 11,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(2025, 1, 18, 13, 30, 0, 0, DateTimeKind.Utc),
+                            Text = "Still can't see the drive even after a restart.",
+                            TicketId = 11,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(2025, 1, 18, 15, 45, 0, 0, DateTimeKind.Utc),
+                            Text = "Found the issue, remapping the drive letter now.",
+                            TicketId = 11,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(2025, 1, 19, 11, 40, 0, 0, DateTimeKind.Utc),
+                            Text = "Happens on both the desktop and laptop versions of Excel.",
+                            TicketId = 12,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(2025, 1, 19, 13, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Can you send one of the crashing files so we can reproduce it?",
+                            TicketId = 12,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CreatedAt = new DateTime(2025, 1, 20, 8, 40, 0, 0, DateTimeKind.Utc),
+                            Text = "Access granted to the finance shared folder.",
+                            TicketId = 13,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(2025, 1, 20, 9, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Confirmed, can see the folder now, thanks.",
+                            TicketId = 13,
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CreatedAt = new DateTime(2025, 1, 21, 14, 20, 0, 0, DateTimeKind.Utc),
+                            Text = "Docking station firmware was updated last week, monitor worked fine before that.",
+                            TicketId = 14,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CreatedAt = new DateTime(2025, 1, 21, 15, 30, 0, 0, DateTimeKind.Utc),
+                            Text = "Rolled back the firmware, second monitor is detected again.",
+                            TicketId = 14,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CreatedAt = new DateTime(2025, 1, 10, 12, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Printer is working again after the driver reinstall, thanks!",
+                            TicketId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CreatedAt = new DateTime(2025, 1, 12, 11, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Swapping the monitor with a spare unit to test.",
+                            TicketId = 5,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CreatedAt = new DateTime(2025, 1, 17, 8, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Following up, any update on the laptop approval?",
+                            TicketId = 8,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CreatedAt = new DateTime(2025, 1, 8, 10, 0, 0, 0, DateTimeKind.Utc),
+                            Text = "Confirming the internet speed is back to normal on our end too.",
+                            TicketId = 3,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("MiniItHelpdesk.Models.Ticket", b =>
@@ -133,6 +351,122 @@ namespace MiniItHelpdesk.Migrations
                             Description = "Adobe Photoshop license needed for a new employee.",
                             Status = "Closed",
                             Title = "New software license needed"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 12, 9, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "External monitor flickers randomly, possibly a cable or driver issue.",
+                            Priority = "Low",
+                            Status = "Open",
+                            Title = "Monitor flickering"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AssignedToUserId = 5,
+                            Category = "Network",
+                            CreatedAt = new DateTime(2025, 1, 13, 10, 20, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "VPN disconnects every few minutes when working from home.",
+                            Priority = "High",
+                            Status = "InProgress",
+                            Title = "VPN connection drops"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AssignedToUserId = 6,
+                            Category = "Account",
+                            CreatedAt = new DateTime(2025, 1, 14, 13, 5, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "Account got locked after several failed login attempts, needs unlocking.",
+                            Priority = "Medium",
+                            Status = "Resolved",
+                            Title = "Account locked out"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 15, 8, 45, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "Current laptop is too slow for daily tasks, requesting a replacement.",
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "New laptop request"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AssignedToUserId = 5,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 16, 15, 30, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Emails are not syncing on mobile device, only on desktop.",
+                            Priority = "Low",
+                            Status = "Closed",
+                            Title = "Email sync issues"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 17, 9, 10, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "Several keys on the keyboard stopped working after a spill.",
+                            Priority = "Low",
+                            Status = "Open",
+                            Title = "Keyboard keys not responding"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AssignedToUserId = 6,
+                            Category = "Network",
+                            CreatedAt = new DateTime(2025, 1, 18, 10, 40, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "Shared network drive is not showing up after the latest update.",
+                            Priority = "High",
+                            Status = "InProgress",
+                            Title = "Cannot access shared drive"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 19, 11, 25, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Excel crashes consistently when opening files larger than 20MB.",
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Excel crashes on large files"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            AssignedToUserId = 5,
+                            Category = "Account",
+                            CreatedAt = new DateTime(2025, 1, 20, 8, 15, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "New team member needs read access to the finance shared folder.",
+                            Priority = "Low",
+                            Status = "Resolved",
+                            Title = "Request access to finance folder"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            AssignedToUserId = 6,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 21, 14, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "Second monitor is not detected after docking station firmware update.",
+                            Priority = "Medium",
+                            Status = "Closed",
+                            Title = "Second monitor not detected"
                         });
                 });
 
@@ -179,6 +513,54 @@ namespace MiniItHelpdesk.Migrations
                             Name = "Direct Manager",
                             PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS.",
                             Role = "ITAgent"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "ana.petrovic@test.com",
+                            Name = "Ana Petrović",
+                            PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS.",
+                            Role = "Employee"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "marko.jovanovic@test.com",
+                            Name = "Marko Jovanović",
+                            PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS.",
+                            Role = "Employee"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "jelena.nikolic@test.com",
+                            Name = "Jelena Nikolić",
+                            PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS.",
+                            Role = "ITAgent"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "stefan.ilic@test.com",
+                            Name = "Stefan Ilić",
+                            PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS.",
+                            Role = "ITAgent"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Email = "milica.stankovic@test.com",
+                            Name = "Milica Stanković",
+                            PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS.",
+                            Role = "Employee"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Email = "admin@test.com",
+                            Name = "Admin User",
+                            PasswordHash = "$2a$11$LaHBE4wxxt2gjQUIVdnODu.Q6XfErT/61N/G/hW.RqV.RuoskmGS.",
+                            Role = "Admin"
                         });
                 });
 
