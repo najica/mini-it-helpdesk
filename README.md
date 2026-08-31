@@ -533,3 +533,14 @@ Vraća listu svih komentara.
   - UserId (int): ID korisnika koji je napisao komentar
   - Text (string): Sadržaj komentara
   - CreatedAt (DateTime): Datum i vreme kada je komentar kreiran
+
+# 16. Sprint 5
+
+### Frontend
+- Kreirani servisi koji odgovaraju kontrolerima na bekendu
+- Dodate komponente za sve potrebne stavke iz specfikacije
+
+### Autorizacija i autentikacija
+- Koristi se JWT
+- Dodat login
+- Dodata autorizacija ruta po rolama
