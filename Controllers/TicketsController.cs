@@ -25,9 +25,12 @@ namespace MiniItHelpdesk.Controllers
         public async Task<ActionResult<PagedResult<TicketDto>>> GetTickets([FromQuery] TicketStatus? status,
                                             [FromQuery] TicketPriority? priority,
                                             [FromQuery] TicketCategory? category,
-                                            [FromQuery] int? user)
+                                            [FromQuery] int? user,
+                                            [FromQuery] string? search,
+                                            [FromQuery] int page = 1,
+                                            [FromQuery] int pageSize = 10)
         {
-            var tickets = await _ticketService.SearchAsync(status, priority, category, user);
+            var tickets = await _ticketService.SearchAsync(status, priority, category, user, search, page, pageSize);
             return Ok(tickets);
         }
 

@@ -104,8 +104,7 @@ export class TicketListComponent implements OnInit, OnDestroy {
       category: this.filterCategory ?? undefined,
       user: this.filterUser ?? undefined,
       page: this.pageNumber,
-      pageSize: this.pageSize
-      user: this.filterUser ?? undefined,
+      pageSize: this.pageSize,
       search: this.filterSearch?.trim() ? this.filterSearch.trim() : undefined
     };
 
