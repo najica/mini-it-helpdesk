@@ -20,7 +20,10 @@
       <div class="status-change" *ngIf="ticket">
         <label for="statusSelect">Status:</label>
         <button *ngFor="let s of statusOptions"
-                [disabled]="changingStatus || ticket.status === s || ticket.status === 'Closed'"
+                type="button"
+                class="btn-status"
+                [class.btn-status-active]="ticket.status === s"
+                [disabled]="!canChangeStatus || changingStatus || ticket.status === s || ticket.status === 'Closed'"
                 (click)="onStatusSelected(s)">
           {{ s }}
         </button>

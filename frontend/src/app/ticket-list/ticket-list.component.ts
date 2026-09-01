@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { Ticket, TicketSearchFilters, TicketService } from '../services/ticket.service';
 import { CreateTicketFormComponent } from '../create-ticket-form/create-ticket-form.component';
 import { AssignTicketFormComponent } from '../assign-ticket-form/assign-ticket-form.component';
+import { AuthService } from '../services/auth.service';
+import { Role } from '../models/auth.model';
 
 @Component({
   selector: 'app-ticket-list',
@@ -42,10 +44,14 @@ export class TicketListComponent implements OnInit {
   assignTicketId: number | null = null;
   assignTicketAssignedToUserId: number | null = null;
 
-  constructor(private ticketService: TicketService) { }
+  constructor(private ticketService: TicketService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.search();
+  }
+
+  get canAssign(): boolean {
+    return this.authService.hasRole(Role.ITAgent, Role.Admin);
   }
 
   openCreateModal(): void {
@@ -57,6 +63,9 @@ export class TicketListComponent implements OnInit {
   }
 
   openAssignModal(ticket: Ticket): void {
+    if (!this.canAssign) {
+      return;
+    }
     this.assignTicketId = ticket.id;
     this.assignTicketAssignedToUserId = ticket.assignedToUserId ?? null;
   }

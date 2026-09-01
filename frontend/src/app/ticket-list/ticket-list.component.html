@@ -101,7 +101,7 @@
             <a [routerLink]="['/tickets', ticket.id]" class="btn-icon btn-details" title="Detalji" aria-label="Detalji">
               <span class="material-icons">visibility</span>
             </a>
-            <button type="button" class="btn-icon btn-assign" title="Dodeli agentu" aria-label="Dodeli agentu" (click)="openAssignModal(ticket)">
+            <button type="button" class="btn-icon btn-assign" title="Dodeli agentu" aria-label="Dodeli agentu" [disabled]="!canAssign" (click)="openAssignModal(ticket)">
               <span class="material-icons">assignment_add</span>
             </button>
           </td>

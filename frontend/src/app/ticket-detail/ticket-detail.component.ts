@@ -6,6 +6,8 @@ import { Comment, CommentService } from '../comment.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
+import { Role } from '../models/auth.model';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -44,8 +46,13 @@ export class TicketDetailComponent implements OnInit {
     private router: Router,
     private ticketService: TicketService,
     private commentService: CommentService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) { }
+
+  get canChangeStatus(): boolean {
+    return this.authService.hasRole(Role.ITAgent, Role.Admin);
+  }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -194,7 +201,7 @@ export class TicketDetailComponent implements OnInit {
   }
 
   onStatusSelected(status: TicketStatus): void {
-    if (!this.ticket || this.changingStatus || status === this.ticket.status) {
+    if (!this.ticket || this.changingStatus || status === this.ticket.status || !this.canChangeStatus) {
       return;
     }
 
