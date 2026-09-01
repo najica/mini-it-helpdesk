@@ -36,7 +36,35 @@ namespace MiniItHelpdesk
                 });
 
             builder.Services.AddOpenApi();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "MiniItHelpdesk", Version = "v1" });
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Unesi JWT token (bez 'Bearer ' prefiksa, Swagger ga sam dodaje)"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+            });
 
             builder.Services.AddScoped<ITicketService, TicketService>();
             builder.Services.AddScoped<IUserService, UserService>();
