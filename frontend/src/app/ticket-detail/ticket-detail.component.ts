@@ -54,6 +54,10 @@ export class TicketDetailComponent implements OnInit {
     return this.authService.hasRole(Role.ITAgent, Role.Admin);
   }
 
+  get canManageTicket(): boolean {
+    return this.authService.hasRole(Role.ITAgent, Role.Admin);
+  }
+
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     const ticketId = idParam ? Number(idParam) : null;
@@ -154,6 +158,9 @@ export class TicketDetailComponent implements OnInit {
 
   // VRAĆENE METODE ZA OTVARANJE MODALA I OSVEŽAVANJE:
   openEditModal(): void {
+    if (!this.canManageTicket) {
+      return;
+    }
     this.showEditModal = true;
   }
 
@@ -162,7 +169,7 @@ export class TicketDetailComponent implements OnInit {
   }
 
   deleteTicket(): void {
-    if (!this.ticket || this.deleting) {
+    if (!this.ticket || this.deleting || !this.canManageTicket) {
       return;
     }
 
