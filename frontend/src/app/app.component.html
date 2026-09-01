@@ -4,6 +4,11 @@
 
     <a routerLink="/tickets" routerLinkActive="active" class="nav-link">Tiketi</a>
     <a routerLink="/users" routerLinkActive="active" class="nav-link">Korisnici</a>
+
+    <div class="nav-user">
+      <span class="nav-user-name">{{ currentUserName }}</span>
+      <button type="button" class="nav-logout-btn" (click)="logout()">Odjava</button>
+    </div>
   </div>
 </nav>
 
