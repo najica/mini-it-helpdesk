@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiniItHelpdesk.Data;
-using MiniItHelpdesk.Models;
-using System;
-using SQLitePCL;
-using System.Net.Sockets;
 using MiniItHelpdesk.DTOs;
 using MiniItHelpdesk.Enums;
+using MiniItHelpdesk.Models;
+using SQLitePCL;
+using System;
+using System.Net.Sockets;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 public class TicketService : ITicketService
 {
@@ -126,16 +127,25 @@ public class TicketService : ITicketService
 
         return MapToDto(ticket);
     }
-    
-    public async Task<List<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId)
+
+    public async Task<PagedResult<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId, int page = 1, int pageSize = 10)
     {
-        var tickets = await _context.Tickets
+        var query = _context.Tickets
             .Where(t => (status == null || t.Status == status) &&
                         (priority == null || t.Priority == priority) &&
                         (category == null || t.Category == category) &&
-                        (userId == null || t.CreatedByUserId == userId))
+                        (userId == null || t.CreatedByUserId == userId));
+
+        var totalCount = await query.CountAsync();
+
+        var tickets = await query
+            .OrderBy(t => t.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
-        return tickets.Select(MapToDto).ToList();
+
+        var result = tickets.Select(MapToDto).ToList();
+        return new PagedResult<TicketDto>(result, totalCount, page, pageSize);
     }
 
     public async Task<TicketDto?> AssignAsync(int id, AssignTicketDto dto)
