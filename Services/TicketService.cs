@@ -127,13 +127,18 @@ public class TicketService : ITicketService
         return MapToDto(ticket);
     }
     
-    public async Task<List<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId)
+    public async Task<List<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId, string? search)
     {
+        var term = string.IsNullOrWhiteSpace(search) ? null : search.Trim();
+
         var tickets = await _context.Tickets
             .Where(t => (status == null || t.Status == status) &&
                         (priority == null || t.Priority == priority) &&
                         (category == null || t.Category == category) &&
-                        (userId == null || t.CreatedByUserId == userId))
+                        (userId == null || t.CreatedByUserId == userId) &&
+                        (term == null ||
+                            EF.Functions.Like(t.Title, $"%{term}%") ||
+                            EF.Functions.Like(t.Description, $"%{term}%")))
             .ToListAsync();
         return tickets.Select(MapToDto).ToList();
     }

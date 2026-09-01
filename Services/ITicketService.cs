@@ -10,6 +10,6 @@ public interface ITicketService
     Task<TicketDto?> UpdateAsync(int id, UpdateTicketDto dto);
     Task<bool> DeleteAsync(int id);
     Task<TicketDto?> ChangeStatusAsync(int id, ChangeStatusDto dto);
-    Task<List<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId);
+    Task<List<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId, string? search);
     Task<TicketDto?> AssignAsync(int id, AssignTicketDto dto);
 }

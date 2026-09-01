@@ -33,14 +33,23 @@
 
     <div class="filter-field">
       <label for="filter-user">ID korisnika</label>
-      <input
-        id="filter-user"
-        name="filter-user"
-        type="number"
-        min="1"
-        placeholder="Svi korisnici"
-        [(ngModel)]="filterUser"
-        (ngModelChange)="search()" />
+      <input id="filter-user"
+             name="filter-user"
+             type="number"
+             min="1"
+             placeholder="Svi korisnici"
+             [(ngModel)]="filterUser"
+             (ngModelChange)="search()" />
+    </div>
+
+    <div class="filter-field">
+      <label for="filter-search">Pretraga</label>
+      <input id="filter-search"
+             name="filter-search"
+             type="text"
+             placeholder="Pretraga po naslovu ili opisu..."
+             [ngModel]="filterSearch"
+             (ngModelChange)="onSearchInput($event)" />
     </div>
   </div>
 
