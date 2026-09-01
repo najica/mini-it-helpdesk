@@ -64,11 +64,11 @@
       </div>
       <div class="detail-item">
         <label>Prijavio:</label>
-        <span>Korisnik #{{ ticket.createdByUserId }}</span>
+        <span>{{ getUserName(ticket.createdByUserId) }}</span>
       </div>
       <div class="detail-item">
         <label>Dodeljeno:</label>
-        <span>{{ ticket.assignedToUserId ? 'Korisnik #' + ticket.assignedToUserId : 'Nije dodeljeno' }}</span>
+        <span>{{ ticket.assignedToUserId ? getUserName(ticket.assignedToUserId) : 'Nije dodeljeno' }}</span>
       </div>
       <div class="detail-item">
         <label>Datum kreiranja:</label>
@@ -99,7 +99,7 @@
       <ul *ngIf="!commentsLoading && !commentsErrorMessage && comments.length > 0" class="comment-list">
         <li *ngFor="let comment of comments" class="comment-item">
           <div class="comment-meta">
-            <span class="comment-author">Korisnik #{{ comment.userId }}</span>
+            <span class="comment-author">{{ getUserName(comment.userId) }}</span>
             <span class="comment-date">{{ comment.createdAt | date:'dd.MM.yyyy. HH:mm' }}</span>
           </div>
           <p class="comment-text">{{ comment.text }}</p>

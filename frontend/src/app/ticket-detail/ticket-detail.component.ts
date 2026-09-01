@@ -58,6 +58,13 @@ export class TicketDetailComponent implements OnInit {
     return this.authService.hasRole(Role.ITAgent, Role.Admin);
   }
 
+  getUserName(userId: number | null | undefined): string | null {
+    if (userId == null) {
+      return null;
+    }
+    return this.users.find(u => u.id === userId)?.name ?? `Korisnik #${userId}`;
+  }
+
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     const ticketId = idParam ? Number(idParam) : null;

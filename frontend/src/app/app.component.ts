@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HealthService } from './health.service';
-import { NavComponent } from './nav/nav.component';
 import { AuthService } from './services/auth.service';
 
 @Component({

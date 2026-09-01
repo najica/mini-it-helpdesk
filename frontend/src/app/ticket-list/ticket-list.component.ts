@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Ticket, TicketSearchFilters, TicketService } from '../services/ticket.service';
 import { CreateTicketFormComponent } from '../create-ticket-form/create-ticket-form.component';
 import { AssignTicketFormComponent } from '../assign-ticket-form/assign-ticket-form.component';
@@ -21,7 +23,7 @@ import { Role } from '../models/auth.model';
     AssignTicketFormComponent
   ]
 })
-export class TicketListComponent implements OnInit {
+export class TicketListComponent implements OnInit, OnDestroy {
   tickets: Ticket[] = [];
   loading = true;
   errorMessage = '';
@@ -34,6 +36,7 @@ export class TicketListComponent implements OnInit {
   filterPriority: string | null = null;
   filterCategory: string | null = null;
   filterUser: number | null = null;
+  filterSearch = '';
 
   pageNumber = 1;
   pageSize = 10;
@@ -44,14 +47,35 @@ export class TicketListComponent implements OnInit {
   assignTicketId: number | null = null;
   assignTicketAssignedToUserId: number | null = null;
 
+  private searchInput$ = new Subject<string>();
+  private searchSubscription?: Subscription;
+
   constructor(private ticketService: TicketService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.searchSubscription = this.searchInput$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe((value) => {
+        this.filterSearch = value;
+        this.search();
+      });
+
     this.search();
   }
 
   get canAssign(): boolean {
     return this.authService.hasRole(Role.ITAgent, Role.Admin);
+  }
+  
+  ngOnDestroy(): void {
+    this.searchSubscription?.unsubscribe();
+  }
+
+  onSearchInput(value: string): void {
+    this.searchInput$.next(value);
   }
 
   openCreateModal(): void {
@@ -89,7 +113,8 @@ export class TicketListComponent implements OnInit {
       category: this.filterCategory ?? undefined,
       user: this.filterUser ?? undefined,
       page: this.pageNumber,
-      pageSize: this.pageSize
+      pageSize: this.pageSize,
+      search: this.filterSearch?.trim() ? this.filterSearch.trim() : undefined
     };
 
     this.ticketService.search(filters).subscribe({

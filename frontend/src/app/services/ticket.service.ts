@@ -13,6 +13,7 @@ export interface TicketSearchFilters {
   priority?: string;
   category?: string;
   user?: number;
+  search?: string;
   page?: number;
   pageSize?: number;
 }

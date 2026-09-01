@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CreateTicketDto } from '../dtos/create-ticket.dto';
 import { TicketCategory, TicketPriority, Ticket } from '../models/ticket.model';
 import { TicketService } from '../services/ticket.service';
+import { AuthService } from '../services/auth.service';
 
 interface CreateTicketForm {
   title: string;
@@ -36,7 +37,7 @@ export class CreateTicketFormComponent implements OnInit {
   errorMessage = '';
   isEditMode = false;
 
-  constructor(private ticketService: TicketService) { }
+  constructor(private ticketService: TicketService, private authService: AuthService) { }
 
   ngOnInit(): void {
     if (this.editTicket) {
@@ -46,9 +47,10 @@ export class CreateTicketFormComponent implements OnInit {
         description: this.editTicket.description,
         priority: this.editTicket.priority || '',
         category: this.editTicket.category || '',
-        // FIX: Dodato ?? null da pomiri undefined vrednosti
         createdByUserId: this.editTicket.createdByUserId ?? null
       };
+    } else {
+      this.form.createdByUserId = this.authService.currentUser?.userId ?? null;
     }
   }
 

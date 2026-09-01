@@ -26,10 +26,11 @@ namespace MiniItHelpdesk.Controllers
                                             [FromQuery] TicketPriority? priority,
                                             [FromQuery] TicketCategory? category,
                                             [FromQuery] int? user,
+                                            [FromQuery] string? search,
                                             [FromQuery] int page = 1,
                                             [FromQuery] int pageSize = 10)
         {
-            var tickets = await _ticketService.SearchAsync(status, priority, category, user, page, pageSize);
+            var tickets = await _ticketService.SearchAsync(status, priority, category, user, search, page, pageSize);
             return Ok(tickets);
         }
 
