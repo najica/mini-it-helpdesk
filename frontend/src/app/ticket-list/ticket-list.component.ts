@@ -33,6 +33,11 @@ export class TicketListComponent implements OnInit {
   filterCategory: string | null = null;
   filterUser: number | null = null;
 
+  pageNumber = 1;
+  pageSize = 10;
+  totalCount = 0;
+  totalPages = 0;
+
   showCreateModal = false;
   assignTicketId: number | null = null;
   assignTicketAssignedToUserId: number | null = null;
@@ -60,6 +65,11 @@ export class TicketListComponent implements OnInit {
     this.assignTicketId = null;
   }
 
+  onFilterChange(): void {
+    this.pageNumber = 1;
+    this.search();
+  }
+
   search(): void {
     this.loading = true;
     this.errorMessage = '';
@@ -68,13 +78,19 @@ export class TicketListComponent implements OnInit {
       status: this.filterStatus ?? undefined,
       priority: this.filterPriority ?? undefined,
       category: this.filterCategory ?? undefined,
-      user: this.filterUser ?? undefined
+      user: this.filterUser ?? undefined,
+      page: this.pageNumber,
+      pageSize: this.pageSize
     };
 
     this.ticketService.search(filters).subscribe({
       next: (data) => {
-        const fetchedTickets = data || [];
+        const fetchedTickets = data?.items || [];
         this.tickets = this.sortTickets(fetchedTickets);
+        this.totalCount = data?.totalCount ?? 0;
+        this.pageNumber = data?.pageNumber ?? this.pageNumber;
+        this.pageSize = data?.pageSize ?? this.pageSize;
+        this.totalPages = this.pageSize > 0 ? Math.max(1, Math.ceil(this.totalCount / this.pageSize)) : 1;
         this.loading = false;
       },
       error: () => {
@@ -82,6 +98,38 @@ export class TicketListComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages || page === this.pageNumber) {
+      return;
+    }
+    this.pageNumber = page;
+    this.search();
+  }
+
+  goToFirstPage(): void {
+    this.goToPage(1);
+  }
+
+  goToPreviousPage(): void {
+    this.goToPage(this.pageNumber - 1);
+  }
+
+  goToNextPage(): void {
+    this.goToPage(this.pageNumber + 1);
+  }
+
+  goToLastPage(): void {
+    this.goToPage(this.totalPages);
+  }
+
+  get pageNumbers(): number[] {
+    const pages: number[] = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pages.push(i);
+    }
+    return pages;
   }
 
   private sortTickets(tickets: Ticket[]): Ticket[] {

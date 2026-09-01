@@ -13,6 +13,15 @@ export interface TicketSearchFilters {
   priority?: string;
   category?: string;
   user?: number;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface PagedResult<T> {
+  items: T[];
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,9 +34,9 @@ export class TicketService {
     return this.http.get<Ticket[]>(this.baseUrl);
   }
 
-  search(filters: TicketSearchFilters): Observable<Ticket[]> {
+  search(filters: TicketSearchFilters): Observable<PagedResult<Ticket>> {
     const params = this.buildParams(filters);
-    return this.http.get<Ticket[]>(this.baseUrl, { params });
+    return this.http.get<PagedResult<Ticket>>(this.baseUrl, { params });
   }
 
   getById(id: number): Observable<Ticket> {
