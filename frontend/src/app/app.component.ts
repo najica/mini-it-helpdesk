@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HealthService } from './health.service';
-import { NavComponent } from './nav/nav.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,16 @@ export class AppComponent implements OnInit {
   backendStatus = 'Provera veze sa backend-om...';
   showNav = true;
 
-  constructor(private healthService: HealthService, private router: Router) {}
+  constructor(private healthService: HealthService, private router: Router, private authService: AuthService) {}
+
+  get currentUserName(): string | null {
+    return this.authService.currentUser?.name ?? null;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 
   ngOnInit(): void {
     this.showNav = !this.router.url.startsWith('/login');

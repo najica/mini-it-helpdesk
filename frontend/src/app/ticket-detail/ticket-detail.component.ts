@@ -6,6 +6,8 @@ import { Comment, CommentService } from '../comment.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
+import { Role } from '../models/auth.model';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -25,7 +27,6 @@ export class TicketDetailComponent implements OnInit {
   users: User[] = [];
 
   newCommentText = '';
-  newCommentUserId: number | null = null;
   submittingComment = false;
   newCommentErrorMessage = '';
 
@@ -44,8 +45,24 @@ export class TicketDetailComponent implements OnInit {
     private router: Router,
     private ticketService: TicketService,
     private commentService: CommentService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) { }
+
+  get canChangeStatus(): boolean {
+    return this.authService.hasRole(Role.ITAgent, Role.Admin);
+  }
+
+  get canManageTicket(): boolean {
+    return this.authService.hasRole(Role.ITAgent, Role.Admin);
+  }
+
+  getUserName(userId: number | null | undefined): string | null {
+    if (userId == null) {
+      return null;
+    }
+    return this.users.find(u => u.id === userId)?.name ?? `Korisnik #${userId}`;
+  }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -115,8 +132,9 @@ export class TicketDetailComponent implements OnInit {
       return;
     }
 
-    if (!this.newCommentUserId) {
-      this.newCommentErrorMessage = 'Izaberite korisnika koji ostavlja komentar.';
+    const userId = this.authService.currentUser?.userId;
+    if (!userId) {
+      this.newCommentErrorMessage = 'Morate biti ulogovani da biste ostavili komentar.';
       return;
     }
 
@@ -125,11 +143,10 @@ export class TicketDetailComponent implements OnInit {
     }
 
     this.submittingComment = true;
-    this.commentService.create(this.ticket.id, { text, userId: this.newCommentUserId }).subscribe({
+    this.commentService.create(this.ticket.id, { text, userId }).subscribe({
       next: (comment) => {
         this.comments.push(comment);
         this.newCommentText = '';
-        this.newCommentUserId = null;
         this.submittingComment = false;
       },
       error: (err: HttpErrorResponse) => {
@@ -147,6 +164,9 @@ export class TicketDetailComponent implements OnInit {
 
   // VRAĆENE METODE ZA OTVARANJE MODALA I OSVEŽAVANJE:
   openEditModal(): void {
+    if (!this.canManageTicket) {
+      return;
+    }
     this.showEditModal = true;
   }
 
@@ -155,7 +175,7 @@ export class TicketDetailComponent implements OnInit {
   }
 
   deleteTicket(): void {
-    if (!this.ticket || this.deleting) {
+    if (!this.ticket || this.deleting || !this.canManageTicket) {
       return;
     }
 
@@ -194,7 +214,7 @@ export class TicketDetailComponent implements OnInit {
   }
 
   onStatusSelected(status: TicketStatus): void {
-    if (!this.ticket || this.changingStatus || status === this.ticket.status) {
+    if (!this.ticket || this.changingStatus || status === this.ticket.status || !this.canChangeStatus) {
       return;
     }
 

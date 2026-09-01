@@ -256,6 +256,11 @@
         font-size: 1.125rem;
         line-height: 1;
       }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
     }
 
     .btn-details {

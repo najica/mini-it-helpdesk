@@ -52,17 +52,6 @@
         </div>
       </div>
 
-      <div class="form-field">
-        <label for="ticket-created-by">ID korisnika koji prijavljuje</label>
-        <input id="ticket-created-by"
-               name="createdByUserId"
-               type="number"
-               min="1"
-               [(ngModel)]="form.createdByUserId"
-               required
-               placeholder="Npr. 1" />
-      </div>
-
       <div class="modal-footer">
         <button type="button" class="btn-secondary" (click)="onCancel()" [disabled]="submitting">Otkaži</button>
         <button type="submit" class="btn-primary" [disabled]="ticketForm.invalid || submitting">

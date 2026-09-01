@@ -7,6 +7,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Ticket, TicketSearchFilters, TicketService } from '../services/ticket.service';
 import { CreateTicketFormComponent } from '../create-ticket-form/create-ticket-form.component';
 import { AssignTicketFormComponent } from '../assign-ticket-form/assign-ticket-form.component';
+import { AuthService } from '../services/auth.service';
+import { Role } from '../models/auth.model';
 
 @Component({
   selector: 'app-ticket-list',
@@ -48,7 +50,7 @@ export class TicketListComponent implements OnInit, OnDestroy {
   private searchInput$ = new Subject<string>();
   private searchSubscription?: Subscription;
 
-  constructor(private ticketService: TicketService) { }
+  constructor(private ticketService: TicketService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.searchSubscription = this.searchInput$
@@ -64,6 +66,10 @@ export class TicketListComponent implements OnInit, OnDestroy {
     this.search();
   }
 
+  get canAssign(): boolean {
+    return this.authService.hasRole(Role.ITAgent, Role.Admin);
+  }
+  
   ngOnDestroy(): void {
     this.searchSubscription?.unsubscribe();
   }
@@ -81,6 +87,9 @@ export class TicketListComponent implements OnInit, OnDestroy {
   }
 
   openAssignModal(ticket: Ticket): void {
+    if (!this.canAssign) {
+      return;
+    }
     this.assignTicketId = ticket.id;
     this.assignTicketAssignedToUserId = ticket.assignedToUserId ?? null;
   }

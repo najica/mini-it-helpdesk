@@ -20,7 +20,10 @@
       <div class="status-change" *ngIf="ticket">
         <label for="statusSelect">Status:</label>
         <button *ngFor="let s of statusOptions"
-                [disabled]="changingStatus || ticket.status === s || ticket.status === 'Closed'"
+                type="button"
+                class="btn-status"
+                [class.btn-status-active]="ticket.status === s"
+                [disabled]="!canChangeStatus || changingStatus || ticket.status === s || ticket.status === 'Closed'"
                 (click)="onStatusSelected(s)">
           {{ s }}
         </button>
@@ -33,8 +36,8 @@
         <span class="badge badge-status" [ngClass]="'status-' + (ticket.status ? ticket.status.toLowerCase() : '')">
           {{ ticket.status }}
         </span>
-        <button type="button" class="btn-edit" (click)="openEditModal()">✎ Izmeni</button>
-        <button type="button" class="btn-delete" (click)="deleteTicket()" [disabled]="deleting">
+        <button type="button" class="btn-edit" [disabled]="!canManageTicket" (click)="openEditModal()">✎ Izmeni</button>
+        <button type="button" class="btn-delete" (click)="deleteTicket()" [disabled]="!canManageTicket || deleting">
           {{ deleting ? 'Brisanje...' : '🗑 Obriši' }}
         </button>
       </div>
@@ -61,11 +64,11 @@
       </div>
       <div class="detail-item">
         <label>Prijavio:</label>
-        <span>Korisnik #{{ ticket.createdByUserId }}</span>
+        <span>{{ getUserName(ticket.createdByUserId) }}</span>
       </div>
       <div class="detail-item">
         <label>Dodeljeno:</label>
-        <span>{{ ticket.assignedToUserId ? 'Korisnik #' + ticket.assignedToUserId : 'Nije dodeljeno' }}</span>
+        <span>{{ ticket.assignedToUserId ? getUserName(ticket.assignedToUserId) : 'Nije dodeljeno' }}</span>
       </div>
       <div class="detail-item">
         <label>Datum kreiranja:</label>
@@ -96,7 +99,7 @@
       <ul *ngIf="!commentsLoading && !commentsErrorMessage && comments.length > 0" class="comment-list">
         <li *ngFor="let comment of comments" class="comment-item">
           <div class="comment-meta">
-            <span class="comment-author">Korisnik #{{ comment.userId }}</span>
+            <span class="comment-author">{{ getUserName(comment.userId) }}</span>
             <span class="comment-date">{{ comment.createdAt | date:'dd.MM.yyyy. HH:mm' }}</span>
           </div>
           <p class="comment-text">{{ comment.text }}</p>
@@ -105,14 +108,6 @@
 
       <form class="comment-form" (ngSubmit)="submitComment()">
         <h5>Dodaj komentar</h5>
-
-        <div class="form-group">
-          <label for="commentUser">Korisnik:</label>
-          <select id="commentUser" name="commentUser" [(ngModel)]="newCommentUserId">
-            <option [ngValue]="null" disabled>Izaberite korisnika</option>
-            <option *ngFor="let user of users" [ngValue]="user.id">{{ user.name }} (#{{ user.id }})</option>
-          </select>
-        </div>
 
         <div class="form-group">
           <label for="commentText">Komentar:</label>
