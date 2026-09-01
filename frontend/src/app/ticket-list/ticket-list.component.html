@@ -42,6 +42,16 @@
         [(ngModel)]="filterUser"
         (ngModelChange)="onFilterChange()" />
     </div>
+
+    <div class="filter-field">
+      <label for="filter-search">Pretraga</label>
+      <input id="filter-search"
+             name="filter-search"
+             type="text"
+             placeholder="Pretraga po naslovu ili opisu..."
+             [ngModel]="filterSearch"
+             (ngModelChange)="onSearchInput($event)" />
+    </div>
   </div>
 
   <div *ngIf="loading" class="loading-state">

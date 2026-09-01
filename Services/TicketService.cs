@@ -128,13 +128,19 @@ public class TicketService : ITicketService
         return MapToDto(ticket);
     }
 
-    public async Task<PagedResult<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId, int page = 1, int pageSize = 10)
-    {
+    public async Task<PagedResult<TicketDto>> SearchAsync(TicketStatus? status, TicketPriority? priority, TicketCategory? category, int? userId, string? search, int page = 1, int pageSize = 10)
+    {   
+        var term = string.IsNullOrWhiteSpace(search) ? null : search.Trim();
         var query = _context.Tickets
             .Where(t => (status == null || t.Status == status) &&
                         (priority == null || t.Priority == priority) &&
                         (category == null || t.Category == category) &&
-                        (userId == null || t.CreatedByUserId == userId));
+                        (userId == null || t.CreatedByUserId == userId) &&
+                        (term == null ||
+                            EF.Functions.Like(t.Title, $"%{term}%") ||
+                            EF.Functions.Like(t.Description, $"%{term}%")));
+
+
 
         var totalCount = await query.CountAsync();
 
