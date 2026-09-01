@@ -3,6 +3,7 @@ using MiniItHelpdesk.Enums;
 using MiniItHelpdesk.DTOs;
 using MiniItHelpdesk.Services;
 using Microsoft.AspNetCore.Authorization;
+using MiniItHelpdesk.Models;
 
 namespace MiniItHelpdesk.Controllers
 {
@@ -21,14 +22,12 @@ namespace MiniItHelpdesk.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TicketDto>>> GetTickets([FromQuery] TicketStatus? status,
+        public async Task<ActionResult<PagedResult<TicketDto>>> GetTickets([FromQuery] TicketStatus? status,
                                             [FromQuery] TicketPriority? priority,
                                             [FromQuery] TicketCategory? category,
-                                            [FromQuery] int? user,
-                                            [FromQuery] string? search)
-
+                                            [FromQuery] int? user)
         {
-            var tickets = await _ticketService.SearchAsync(status, priority, category, user, search);
+            var tickets = await _ticketService.SearchAsync(status, priority, category, user);
             return Ok(tickets);
         }
 

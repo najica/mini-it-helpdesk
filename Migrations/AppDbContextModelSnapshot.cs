@@ -467,6 +467,236 @@ namespace MiniItHelpdesk.Migrations
                             Priority = "Medium",
                             Status = "Closed",
                             Title = "Second monitor not detected"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Category = "Network",
+                            CreatedAt = new DateTime(2025, 1, 22, 8, 30, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Laptop drops the office Wi-Fi connection every 10-15 minutes.",
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Wi-Fi keeps disconnecting"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            AssignedToUserId = 5,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 22, 9, 45, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "Slack update fails with a permissions error every time.",
+                            Priority = "Low",
+                            Status = "InProgress",
+                            Title = "Cannot install Slack update"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 22, 10, 15, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "Cursor freezes for a few seconds every couple of minutes.",
+                            Priority = "Low",
+                            Status = "Open",
+                            Title = "Mouse cursor freezing"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            AssignedToUserId = 6,
+                            Category = "Account",
+                            CreatedAt = new DateTime(2025, 1, 23, 8, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Newly transferred employee needs access to the marketing shared drive.",
+                            Priority = "Low",
+                            Status = "Resolved",
+                            Title = "Need access to marketing drive"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 23, 9, 20, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "Third floor printer keeps printing faded pages, likely needs a new toner cartridge.",
+                            Priority = "Low",
+                            Status = "Open",
+                            Title = "Printer out of toner"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            AssignedToUserId = 5,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 23, 11, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "Emails stay stuck in the outbox and never send.",
+                            Priority = "High",
+                            Status = "InProgress",
+                            Title = "Outlook not sending emails"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Category = "Account",
+                            CreatedAt = new DateTime(2025, 1, 24, 8, 40, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Authenticator app codes are being rejected during login.",
+                            Priority = "High",
+                            Status = "Open",
+                            Title = "Two-factor authentication not working"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            AssignedToUserId = 6,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 24, 9, 10, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "Laptop shows no signs of power even when plugged in.",
+                            Priority = "High",
+                            Status = "InProgress",
+                            Title = "Laptop won't turn on"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            AssignedToUserId = 5,
+                            Category = "Account",
+                            CreatedAt = new DateTime(2025, 1, 24, 10, 30, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "Shared team calendar shows an access denied error.",
+                            Priority = "Medium",
+                            Status = "Resolved",
+                            Title = "Cannot open shared calendar"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Category = "Network",
+                            CreatedAt = new DateTime(2025, 1, 25, 8, 15, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Video freezes constantly during Teams calls while audio keeps working.",
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Video calls freezing"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            AssignedToUserId = 6,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 25, 9, 50, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "Installing a required design tool is blocked by admin restrictions.",
+                            Priority = "Low",
+                            Status = "Closed",
+                            Title = "Software installation blocked"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 25, 11, 20, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "Laptop battery keeps draining even while connected to the docking station.",
+                            Priority = "Medium",
+                            Status = "Open",
+                            Title = "Docking station not charging laptop"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            AssignedToUserId = 5,
+                            Category = "Account",
+                            CreatedAt = new DateTime(2025, 1, 26, 8, 5, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Password reset emails are not showing up, even after checking spam.",
+                            Priority = "Medium",
+                            Status = "InProgress",
+                            Title = "Password reset email not arriving"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Category = "Network",
+                            CreatedAt = new DateTime(2025, 1, 26, 9, 30, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "Uploading files to the shared network drive takes much longer than usual.",
+                            Priority = "Low",
+                            Status = "Open",
+                            Title = "Slow file uploads to shared drive"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            AssignedToUserId = 6,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 26, 10, 45, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "PowerPoint crashes every time a presentation is exported to PDF.",
+                            Priority = "Medium",
+                            Status = "Resolved",
+                            Title = "PowerPoint crashes on export"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Category = "Account",
+                            CreatedAt = new DateTime(2025, 1, 27, 8, 25, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Local admin rights needed to install an approved development tool.",
+                            Priority = "Low",
+                            Status = "Open",
+                            Title = "Need admin rights for install"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            AssignedToUserId = 5,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 27, 9, 40, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "New headset connects fine but the microphone is not picked up by any app.",
+                            Priority = "Low",
+                            Status = "InProgress",
+                            Title = "Headset microphone not detected"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Category = "Network",
+                            CreatedAt = new DateTime(2025, 1, 27, 11, 10, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 3,
+                            Description = "VPN client installer closes immediately after launch on a new laptop.",
+                            Priority = "High",
+                            Status = "Open",
+                            Title = "VPN client won't install"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            AssignedToUserId = 6,
+                            Category = "Software",
+                            CreatedAt = new DateTime(2025, 1, 28, 8, 50, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 4,
+                            Description = "Some emails sent to the support shared mailbox never arrive.",
+                            Priority = "Medium",
+                            Status = "Closed",
+                            Title = "Shared mailbox missing emails"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Category = "Hardware",
+                            CreatedAt = new DateTime(2025, 1, 28, 10, 5, 0, 0, DateTimeKind.Utc),
+                            CreatedByUserId = 7,
+                            Description = "Display resolution reverts to a lower setting every time the PC restarts.",
+                            Priority = "Low",
+                            Status = "Open",
+                            Title = "Screen resolution resets after restart"
                         });
                 });
 

@@ -9,7 +9,7 @@
   <div class="filters-section">
     <div class="filter-field">
       <label for="filter-status">Status</label>
-      <select id="filter-status" name="filter-status" [(ngModel)]="filterStatus" (ngModelChange)="search()">
+      <select id="filter-status" name="filter-status" [(ngModel)]="filterStatus" (ngModelChange)="onFilterChange()">
         <option [ngValue]="null">Sve</option>
         <option *ngFor="let status of statusOptions" [ngValue]="status">{{ status }}</option>
       </select>
@@ -17,7 +17,7 @@
 
     <div class="filter-field">
       <label for="filter-priority">Prioritet</label>
-      <select id="filter-priority" name="filter-priority" [(ngModel)]="filterPriority" (ngModelChange)="search()">
+      <select id="filter-priority" name="filter-priority" [(ngModel)]="filterPriority" (ngModelChange)="onFilterChange()">
         <option [ngValue]="null">Sve</option>
         <option *ngFor="let priority of priorityOptions" [ngValue]="priority">{{ priority }}</option>
       </select>
@@ -25,7 +25,7 @@
 
     <div class="filter-field">
       <label for="filter-category">Kategorija</label>
-      <select id="filter-category" name="filter-category" [(ngModel)]="filterCategory" (ngModelChange)="search()">
+      <select id="filter-category" name="filter-category" [(ngModel)]="filterCategory" (ngModelChange)="onFilterChange()">
         <option [ngValue]="null">Sve</option>
         <option *ngFor="let category of categoryOptions" [ngValue]="category">{{ category }}</option>
       </select>
@@ -33,6 +33,14 @@
 
     <div class="filter-field">
       <label for="filter-user">ID korisnika</label>
+      <input
+        id="filter-user"
+        name="filter-user"
+        type="number"
+        min="1"
+        placeholder="Svi korisnici"
+        [(ngModel)]="filterUser"
+        (ngModelChange)="onFilterChange()" />
       <input id="filter-user"
              name="filter-user"
              type="number"
@@ -117,6 +125,32 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && tickets.length > 0 && totalPages > 1" class="pagination">
+    <button type="button" class="page-btn" [disabled]="pageNumber === 1" (click)="goToFirstPage()" aria-label="Prva stranica">
+      &laquo;
+    </button>
+    <button type="button" class="page-btn" [disabled]="pageNumber === 1" (click)="goToPreviousPage()" aria-label="Prethodna stranica">
+      &lsaquo;
+    </button>
+
+    <button
+      type="button"
+      *ngFor="let page of pageNumbers"
+      class="page-btn page-number"
+      [class.active]="page === pageNumber"
+      [attr.aria-current]="page === pageNumber ? 'page' : null"
+      (click)="goToPage(page)">
+      {{ page }}
+    </button>
+
+    <button type="button" class="page-btn" [disabled]="pageNumber === totalPages" (click)="goToNextPage()" aria-label="Sledeća stranica">
+      &rsaquo;
+    </button>
+    <button type="button" class="page-btn" [disabled]="pageNumber === totalPages" (click)="goToLastPage()" aria-label="Poslednja stranica">
+      &raquo;
+    </button>
   </div>
 
   <app-create-ticket-form *ngIf="showCreateModal" (close)="closeCreateModal()" (created)="search()"></app-create-ticket-form>
