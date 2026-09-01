@@ -27,7 +27,6 @@ export class TicketDetailComponent implements OnInit {
   users: User[] = [];
 
   newCommentText = '';
-  newCommentUserId: number | null = null;
   submittingComment = false;
   newCommentErrorMessage = '';
 
@@ -133,8 +132,9 @@ export class TicketDetailComponent implements OnInit {
       return;
     }
 
-    if (!this.newCommentUserId) {
-      this.newCommentErrorMessage = 'Izaberite korisnika koji ostavlja komentar.';
+    const userId = this.authService.currentUser?.userId;
+    if (!userId) {
+      this.newCommentErrorMessage = 'Morate biti ulogovani da biste ostavili komentar.';
       return;
     }
 
@@ -143,11 +143,10 @@ export class TicketDetailComponent implements OnInit {
     }
 
     this.submittingComment = true;
-    this.commentService.create(this.ticket.id, { text, userId: this.newCommentUserId }).subscribe({
+    this.commentService.create(this.ticket.id, { text, userId }).subscribe({
       next: (comment) => {
         this.comments.push(comment);
         this.newCommentText = '';
-        this.newCommentUserId = null;
         this.submittingComment = false;
       },
       error: (err: HttpErrorResponse) => {
