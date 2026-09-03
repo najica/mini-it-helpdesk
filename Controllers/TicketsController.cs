@@ -127,9 +127,6 @@ namespace MiniItHelpdesk.Controllers
             }
         }
 
-        [HttpGet("boom")]
-        public IActionResult Boom() => throw new InvalidOperationException("namerna gre�ka");
-
         [HttpPatch("{id}/assign")]
         [Authorize(Roles = "ITAgent,Admin")]
         public async Task<IActionResult> Assign(int id, [FromBody] AssignTicketDto dto)
