@@ -218,6 +218,14 @@ export class TicketDetailComponent implements OnInit {
       return;
     }
 
+    const confirmed = window.confirm(
+      `Da li ste sigurni da želite da promenite status tiketa #${this.ticket.id} - "${this.ticket.title}"?`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
     this.statusErrorMessage = '';
     this.changingStatus = true;
 
