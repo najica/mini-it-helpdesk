@@ -4,6 +4,7 @@ using MiniItHelpdesk.DTOs;
 using MiniItHelpdesk.Services;
 using Microsoft.AspNetCore.Authorization;
 using MiniItHelpdesk.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace MiniItHelpdesk.Controllers
 {
@@ -27,8 +28,8 @@ namespace MiniItHelpdesk.Controllers
                                             [FromQuery] TicketCategory? category,
                                             [FromQuery] int? user,
                                             [FromQuery] string? search,
-                                            [FromQuery] int page = 1,
-                                            [FromQuery] int pageSize = 10)
+                                            [FromQuery] [Range(1, int.MaxValue)] int page = 1,
+                                            [FromQuery] [Range(1, 60)] int pageSize = 10)
         {
             var tickets = await _ticketService.SearchAsync(status, priority, category, user, search, page, pageSize);
             return Ok(tickets);
