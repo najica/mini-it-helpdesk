@@ -111,6 +111,7 @@ namespace MiniItHelpdesk
 
             app.UseExceptionHandler();
 
+            if(app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
                 app.UseSwagger();
